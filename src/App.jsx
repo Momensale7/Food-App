@@ -38,7 +38,7 @@ function App() {
         children:[
           {index:true,element:<Dashboard/>},
           {path:"recipes",element:<RecipesList/>},
-          {path:"recipes-dataaaaaaaaafdffdffffdfd",element:<RecipesData/>},
+          {path:"recipes-data",element:<RecipesData/>},
           {path:"categories",element:<CategoriesList/>},
           {path:"category",element:<CategoriesData/>},
           {path:"users",element:<UsersList/>},
