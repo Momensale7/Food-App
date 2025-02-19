@@ -1,0 +1,16 @@
+adpyke.codesnap
+bracketpaircolordlw.bracket-pair-color-dlw
+bradlc.vscode-tailwindcss
+christian-kohler.path-intellisense
+dbaeumer.vscode-eslint
+editorconfig.editorconfig
+jprestidge.theme-material-theme
+oderwat.indent-rainbow
+orsenkucher.vscode-graphql
+parthr2031.colorful-comments
+pkief.material-icon-theme
+rodrigovallades.es7-react-js-snippets
+steoates.autoimport
+vscodeshift.material-ui-snippets
+wallabyjs.console-ninja
+zignd.html-css-class-completion
