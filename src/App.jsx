@@ -4,7 +4,6 @@ import Login from './modules/Authentication/Login/Login'
 import Register from './modules/Authentication/Register/Register'
 import ResetPass from './modules/Authentication/Reset-pass/ResetPass'
 import ForgetPass from './modules/Authentication/Forget-pass/ForgetPass'
-import VerifyAccount from './modules/Authentication/Verify-account/verifyAccount'
 import NotFound from './modules/Shared/NotFound/NotFound'
 import MasterLayout from './modules/Shared/MasterLayout/MasterLayout'
 import Dashboard from './modules/Dashboard/Dashboard'
@@ -14,6 +13,7 @@ import CategoriesList from './modules/Categories/CategoriesList/CategoriesList'
 import CategoriesData from './modules/Categories/CategoriesData/CategoriesData'
 import UsersList from './modules/Users/UsersList/UsersList'
 import { Bounce, ToastContainer } from 'react-toastify'
+import VerifyAccount from './modules/Authentication/Verify-account/verifyAccount'
 
 function App() {
   const routes = createBrowserRouter(
