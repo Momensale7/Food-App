@@ -13,7 +13,7 @@ import CategoriesList from './modules/Categories/CategoriesList/CategoriesList'
 import CategoriesData from './modules/Categories/CategoriesData/CategoriesData'
 import UsersList from './modules/Users/UsersList/UsersList'
 import { Bounce, ToastContainer } from 'react-toastify'
-import VerifyAccount from './modules/Authentication/Verify-account/verifyAccount'
+import VerifyAccount from './modules/Authentication/Verify-account/VerifyAccount'
 
 function App() {
   const routes = createBrowserRouter(
