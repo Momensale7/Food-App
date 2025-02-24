@@ -14,8 +14,25 @@ import CategoriesData from './modules/Categories/CategoriesData/CategoriesData'
 import UsersList from './modules/Users/UsersList/UsersList'
 import { Bounce, ToastContainer } from 'react-toastify'
 import VerifyAccount from './modules/Authentication/Verify-account/VerifyAccount'
+import { jwtDecode } from 'jwt-decode'
+import { useEffect, useState } from 'react'
+import ProtectedRoute from './modules/Shared/ProtectedRoute/ProtectedRoute'
 
 function App() {
+  const [loginData,setLoginData]=useState(null);
+  let saveLoginData= () => {
+    let encodedToken= localStorage.getItem('token')
+      let decodedToken= jwtDecode(encodedToken)
+      setLoginData(decodedToken)
+      console.log(loginData);
+      
+  }
+  
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      saveLoginData();
+    } 
+  },[])
   const routes = createBrowserRouter(
     [
       {
@@ -23,8 +40,8 @@ function App() {
         element:<AuthLayout/>,
         errorElement:<NotFound/>,
         children:[
-          {index:true,element:<Login/>},
-          {path:"login",element:<Login/>},
+          {index:true,element:<Login saveLoginData={saveLoginData}/>},
+          {path:"login",element:<Login saveLoginData={saveLoginData}/>},
           {path:"register",element:<Register/>},
           {path:"forget-password",element:<ForgetPass/>},
           {path:"reset-password",element:<ResetPass/>},
@@ -33,7 +50,7 @@ function App() {
       },
       {
         path:"/dashboard",
-        element:<MasterLayout/>,
+        element:<ProtectedRoute loginData={loginData}><MasterLayout loginData={loginData}/></ProtectedRoute>,
         errorElement:<NotFound/>,
         children:[
           {index:true,element:<Dashboard/>},

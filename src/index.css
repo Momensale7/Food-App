@@ -1,12 +1,51 @@
 .Auth-container {
-background-image: url(../src/assets/images/bg-auth.png);
-background-position: center center;
-background-size: cover;
-background-repeat: no-repeat;
+    background-image: url(../src/assets/images/bg-auth.png);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-.bg-overlay{
-    background: linear-gradient(45deg,rgba(47, 140, 96, 0.5) ,rgba(0, 0, 0, 0.7));
+
+.bg-overlay {
+    background: linear-gradient(45deg, rgba(47, 140, 96, 0.5), rgba(0, 0, 0, 0.7));
 }
-.fs-12{
+
+.fs-12 {
     font-size: 12px;
+}
+
+.sidebarContainer .logoLi {
+    padding: 38px 50px 71px 0px;
+    /* text-align: center; */
+}
+.logocollapsed {
+    width: 90px;
+    height: 34px;
+}   
+.sidebarlogo {
+    transition: all 0.3s;
+    display: block;
+}
+
+.sidebarContainer .ps-sidebar-container {
+    background-color: #1f263e;
+    height: 100vh;
+    color: #fff;
+    border-top-right-radius: 58px;
+}
+
+.sidebarContainer .ps-menu-button:hover {
+    background-color: rgba(47, 140, 96, 0.5) !important;
+    border-left: 5px solid rgb(47, 140, 96);
+}
+
+.sidebarContainer .ps-menu-button {
+    transition: all 0.3s;
+}
+.sidebarContainer .active{
+    background-color: rgba(47, 140, 96, 0.1) !important;
+    border-left: 5px solid rgb(47, 140, 96);
+}
+.sidebarContainer .logoLi a:hover {
+    background-color: transparent !important;
+    border-left: none
 }

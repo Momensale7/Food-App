@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Bounce, toast } from "react-toastify";
-export default function Login() {
+// eslint-disable-next-line react/prop-types
+export default function Login({saveLoginData}) {
   let { register, formState: { errors }, handleSubmit } = useForm()
   let navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
@@ -26,8 +27,9 @@ export default function Login() {
         transition: Bounce,
       });
       setIsLoading(false)
+      localStorage.setItem('token',response.data.token)
+      // saveLoginData()
       navigate('/dashboard');
-
     } catch (error) {
       // console.log(error);
       setIsLoading(false)

@@ -1,18 +1,20 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Sidebar from '../Sidebar/Sidebar'
 import Navbar from '../Navbar/Navbar'
 import Header from '../Header/Header'
+import SideBar from '../Sidebar/Sidebar'
 
-export default function MasterLayout() {
+export default function MasterLayout({loginData}) {
+  
   return (
     <>
     <div className="d-flex">
-      <div className='w-25 bg-info'>
-      <Sidebar/>
+      <div className=''>
+      <SideBar/>
       </div>
-    <div className='w-75 bg-danger'>
-      <Navbar/>
+    <div className='w-100 bg-danger'>
+      <Navbar loginData={loginData}/>
       <Header/>
       <Outlet/>
     </div>
