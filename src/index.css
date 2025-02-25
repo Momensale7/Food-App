@@ -10,7 +10,7 @@
 }
 
 .fs-12 {
-    font-size: 12px;
+    font-size: 12px !important;
 }
 
 .sidebarContainer .logoLi {
@@ -48,4 +48,66 @@
 .sidebarContainer .logoLi a:hover {
     background-color: transparent !important;
     border-left: none
+}
+.header-bg {
+    background-image: url(../src/assets/images/headerBg.png);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    padding: 12px 85px 0px ;
+}
+.bg-main{
+    background-color: #1F384C;
+}
+.text-dark-main{
+    color: #1F384C ;
+}
+.profile-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .nav-item{
+    margin-left: 10px;
+  }
+
+
+.categories .table td{
+    color: #1f263e;
+    font-size: 14px;
+}
+.categories .table {
+    border-radius: 10px;
+}
+.categories .table th{
+    background-color: #E2E5EB;
+    color: #1f263e;
+    padding-block: 10px;    
+}
+.greenMain{
+    color: #009247;
+}
+.actionDropdown{
+    transform: translate3d(-99.6364px, -73.0909px, 0px) !important;
+    --bs-dropdown-min-width: 2rem !important;
+    width: 120px;
+}
+.closeBtn{
+    color: red;
+    border: 1px solid red;  
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+.modalText{
+    color: #494949;
+}
+.recipeImg{
+    width: 65px;
+    height: 65px;
+    border-radius: 8px;
+}
+.overflowx-auto{
+    overflow-x: auto;
 }

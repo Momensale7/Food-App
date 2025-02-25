@@ -16,7 +16,7 @@ export default function SideBar() {
   const menuItems = [
     { to: "/dashboard", icon: "fa-home", label: "Home" },
     { to: "users", icon: "fa-users", label: "Users" },
-    { to: "recipes-data", icon: "fa-utensils", label: "Recipes" },
+    { to: "recipes", icon: "fa-utensils", label: "Recipes" },
     { to: "categories", icon: "fa-list", label: "Categories" },
   ]
   return (

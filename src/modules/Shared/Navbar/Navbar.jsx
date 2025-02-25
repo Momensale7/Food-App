@@ -1,12 +1,36 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-
+import avatar from '../../../assets/images/avatar.jpg'
 export default function Navbar({loginData}) {
   console.log(loginData);
   
   return (
-    <div>
-      navbar
+    <div className="container pt-3">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary mt-2 border-0 p-0 rounded-2">
+  <div className="container-fluid rounded-2 ">
+    <button className="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul className="navbar-nav ms-auto  text-dark-main">
+        <li className="nav-item d-flex align-items-center">
+          <img src={avatar} alt="Profile" className="profile-image ms-1" />
+          <a className="nav-link fs-12 text-dark-main" aria-current="page" href="#">{loginData?.userName}</a>
+        </li>
+        <li className="nav-item dropdown">
+          <a className="nav-link fs-12 dropdown-toggle text-dark-main" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          </a>
+          {/* <ul className="dropdown-menu">
+            <li><a className="dropdown-item" href="#">Action</a></li>
+          </ul> */}
+        </li>
+        <li className="nav-item ">
+          <a className="nav-link text-dark-main fs-12" aria-current="page" ><i className="fa fa-bell"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
     </div>
   )
 }
