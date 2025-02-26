@@ -9,7 +9,7 @@ import NoData from '../../Shared/NoData/NoData';
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);

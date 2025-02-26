@@ -105,8 +105,8 @@ export default function Login({saveLoginData}) {
                   {errors.password && <p className="text-danger mb-2 rounded-1 w-100">{errors.password.message}</p>}
                 </div>
                 <div className="links d-flex justify-content-between mb-3 mt-1">
-                  <Link to="register" className="text-black text-decoration-none">Register Now?</Link>
-                  <Link to="forget-password" className="text-success text-decoration-none">Forget Password?</Link>
+                  <Link to="/register" className="text-black text-decoration-none">Register Now?</Link>
+                  <Link to="/forget-password" className="text-success text-decoration-none">Forget Password?</Link>
                 </div>
                 <div className="">
                     <button className="btn btn-success w-100 d-block" disabled={isLoading}>
