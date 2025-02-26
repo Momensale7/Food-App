@@ -27,13 +27,13 @@ export default function Login({saveLoginData}) {
         transition: Bounce,
       });
       setIsLoading(false)
-      localStorage.setItem('token',response.data.token)
-      // saveLoginData()
+      localStorage.setItem('token',response?.data?.token)
+      saveLoginData()
       navigate('/dashboard');
     } catch (error) {
       // console.log(error);
       setIsLoading(false)
-      toast.error(`${error.response.data.message}`, {
+      toast.error(`${error?.response?.data?.message}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

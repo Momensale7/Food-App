@@ -3,6 +3,8 @@ import headerImage from '../../../assets/images/headerImg.png';
 import Header from '../../Shared/Header/Header';
 import axios from 'axios';
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation';
+import SubHeader from '../../Shared/SubHeader/SubHeader';
+import NoData from '../../Shared/NoData/NoData';
 
 export default function RecipesList() {
   const [recipes, setRecipes] = useState([]);
@@ -22,9 +24,9 @@ export default function RecipesList() {
           pageSize
         }
       });
-      console.log(response.data.data);
-      setRecipes(response.data.data);
-      setTotalPages(response.data.totalNumberOfPages);
+      // console.log(response.data.data);
+      setRecipes(response?.data?.data);
+      setTotalPages(response?.data?.totalNumberOfPages);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
@@ -66,6 +68,8 @@ export default function RecipesList() {
         description="You can now add your items that any user can order it from the Application and you can edit"
         image={headerImage}
       />
+            <SubHeader title={"Recipe Table Details"} description ={"You can check all details"} btnContent={"Add New item"}/>
+      
       <div className="categories container mt-2 ">
         <table className="table rounded-3 ">
           <thead>
@@ -80,7 +84,7 @@ export default function RecipesList() {
             </tr>
           </thead>
           <tbody>
-            {recipes.map((recipe, index) => (
+            {recipes.length > 0? recipes.map((recipe, index) => (
               <tr key={index}>
                 <td>{recipe?.name}</td>
                 <td><img src={'https://upskilling-egypt.com:3006/'+recipe?.imagePath} alt={recipe?.name} className='recipeImg' /></td>
@@ -99,7 +103,7 @@ export default function RecipesList() {
                   </div>
                 </td>
               </tr>
-            ))}
+            )):<tr><td colSpan={7}><NoData/></td></tr>}
           </tbody>
         </table>
 

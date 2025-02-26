@@ -25,7 +25,6 @@ function App() {
       let decodedToken= jwtDecode(encodedToken)
       setLoginData(decodedToken)
       console.log(loginData);
-      
   }
   
   useEffect(()=>{

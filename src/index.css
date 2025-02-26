@@ -79,14 +79,18 @@
 }
 .categories .table {
     border-radius: 10px;
+    background-color: #E2E5EB;
 }
 .categories .table th{
-    background-color: #E2E5EB;
+    background-color: transparent;
     color: #1f263e;
     padding-block: 10px;    
 }
 .greenMain{
     color: #009247;
+}
+.greenMainBg{
+    background-color: #009247 !;
 }
 .actionDropdown{
     transform: translate3d(-99.6364px, -73.0909px, 0px) !important;

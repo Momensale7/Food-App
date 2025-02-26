@@ -3,6 +3,8 @@ import headerImage from '../../../assets/images/headerImg.png';
 import Header from '../../Shared/Header/Header';
 import axios from 'axios';
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation';
+import SubHeader from '../../Shared/SubHeader/SubHeader';
+import NoData from '../../Shared/NoData/NoData';
 
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
@@ -66,6 +68,7 @@ export default function CategoriesList() {
         description="You can now add your items that any user can order it from the Application and you can edit"
         image={headerImage}
       />
+      <SubHeader title={"Categories Table Details"} description ={"You can check all details"} btnContent={"Add New Category"}/>
       <div className="categories container mt-2">
         <table className="table rounded-3 overflowx-hidden">
           <thead>
@@ -77,7 +80,7 @@ export default function CategoriesList() {
             </tr>
           </thead>
           <tbody>
-            {categories.map((category, index) => (
+            {categories.length >0? categories.map((category, index) => (
               <tr key={index}>
                 <td>{category?.id}</td>
                 <td>{category?.name}</td>
@@ -102,7 +105,7 @@ export default function CategoriesList() {
                   </div>
                 </td>
               </tr>
-            ))}
+            )): <tr> <td colSpan={4}><NoData/></td></tr> }
           </tbody>
         </table>
 
