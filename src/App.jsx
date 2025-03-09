@@ -42,7 +42,6 @@ function App() {
           {index:true,element:<Login saveLoginData={saveLoginData}/>},
           {path:"login",element:<Login saveLoginData={saveLoginData}/>},
           {path:"register",element:<Register/>},
-          {path:"forget-password",element:<ForgetPass/>},
           {path:"reset-password",element:<ResetPass/>},
           {path:"verify-account",element:<VerifyAccount/>},
         ]

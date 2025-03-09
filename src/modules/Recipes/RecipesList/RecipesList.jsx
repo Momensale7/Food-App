@@ -5,6 +5,7 @@ import axios from 'axios';
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation';
 import SubHeader from '../../Shared/SubHeader/SubHeader';
 import NoData from '../../Shared/NoData/NoData';
+import { privateAxiosInstance, RECIPES_URLS } from '../../services/urls/urls';
 
 export default function RecipesList() {
   const [recipes, setRecipes] = useState([]);
@@ -15,10 +16,7 @@ export default function RecipesList() {
   const [itemToDelete, setItemToDelete] = useState(null);
   const getRecipes = async () => {
     try {
-      let response = await axios.get('https://upskilling-egypt.com:3006/api/v1/recipe', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
+      let response = await privateAxiosInstance.get(RECIPES_URLS.RECIPES_LIST, {
         params: {
           pageNumber,
           pageSize
@@ -49,11 +47,7 @@ export default function RecipesList() {
   const handleConfirmDelete = async() => {
     console.log('Deleting item with ID:', itemToDelete);
     try {
-      let response = await axios.delete(`https://upskilling-egypt.com:3006/api/v1/recipe/${itemToDelete}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      let response = await privateAxiosInstance.delete(RECIPES_URLS.DELETE_RECIPE(itemToDelete),);
       getRecipes();
     } catch (error) {
       console.error('Error deleting recipe:', error);
@@ -71,41 +65,43 @@ export default function RecipesList() {
             <SubHeader title={"Recipe Table Details"} description ={"You can check all details"} btnContent={"Add New item"}/>
       
       <div className="categories container mt-2 ">
-        <table className="table rounded-3 ">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Image</th>
-              <th scope="col">Price</th>
-              <th scope="col">Description</th>
-              <th scope="col">Category</th>
-              <th scope="col">Tag</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {recipes.length > 0? recipes.map((recipe, index) => (
-              <tr key={index}>
-                <td>{recipe?.name}</td>
-                <td><img src={'https://upskilling-egypt.com:3006/'+recipe?.imagePath} alt={recipe?.name} className='recipeImg' /></td>
-                <td>{recipe?.price}</td>
-                <td>{recipe?.description}</td>
-                <td>{recipe?.category?.map((category)=>(category.name))}</td>
-                <td>{recipe?.tag?.name}</td>
-                <td>
-                  <div className="dropdown">
-                    <i className="fa fa-ellipsis-h"data-bs-toggle="dropdown" aria-expanded="false"></i>
-                    <ul className="dropdown-menu actionDropdown">
-                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-eye greenMain mx-2"></i>view</a></li>
-                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
-                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={()=>handleDeleteClick(recipe.id)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-            )):<tr><td colSpan={7}><NoData/></td></tr>}
-          </tbody>
-        </table>
+      <div className="table-responsive">
+  <table className="table min-w-1000">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Image</th>
+        <th scope="col">Price</th>
+        <th scope="col">Description</th>
+        <th scope="col">Category</th>
+        <th scope="col">Tag</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {recipes.length > 0 ? recipes.map((recipe, index) => (
+        <tr key={index}>
+          <td>{recipe?.name}</td>
+          <td><img src={'https://upskilling-egypt.com:3006/'+recipe?.imagePath} alt={recipe?.name} className='recipeImg' /></td>
+          <td>{recipe?.price}</td>
+          <td>{recipe?.description}</td>
+          <td>{recipe?.category?.map(category => category.name).join(', ')}</td>
+          <td>{recipe?.tag?.name}</td>
+          <td>
+            <div className="dropdown">
+              <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
+              <ul className="dropdown-menu actionDropdown">
+                <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
+                <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-edit greenMain mx-2"></i>Edit</a></li>
+                <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(recipe.id)}><i className="fa fa-trash greenMain mx-2"></i>Delete</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      )) : <tr><td colSpan={7}><NoData /></td></tr>}
+    </tbody>
+  </table>
+</div>
 
         {/* Pagination */}
         <nav aria-label="Page navigation example">

@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import headerImage from '../../../assets/images/headerImg.png';
 import Header from '../../Shared/Header/Header';
-import axios from 'axios';
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation';
 import SubHeader from '../../Shared/SubHeader/SubHeader';
 import NoData from '../../Shared/NoData/NoData';
+import { privateAxiosInstance, CATEGORIES_URLS } from '../../services/urls/urls';
 
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(1);
+  const [pageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const getCategories = async () => {
     try {
-      let response = await axios.get('https://upskilling-egypt.com:3006/api/v1/category', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
+      let response = await privateAxiosInstance.get(CATEGORIES_URLS.CATEGORIES_LIST, {
         params: {
           pageNumber,
           pageSize
@@ -48,11 +45,7 @@ export default function CategoriesList() {
   const handleConfirmDelete = async() => {
     console.log('Deleting item with ID:', itemToDelete);
     try {
-      let response = await axios.delete(`https://upskilling-egypt.com:3006/api/v1/category/${itemToDelete}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      let response = await privateAxiosInstance.delete(CATEGORIES_URLS.DELETE_CATEGORY(itemToDelete),);
       getCategories();
     } catch (error) {
       console.error('Error deleting categories:', error);
@@ -69,8 +62,9 @@ export default function CategoriesList() {
         image={headerImage}
       />
       <SubHeader title={"Categories Table Details"} description ={"You can check all details"} btnContent={"Add New Category"}/>
-      <div className="categories container mt-2">
-        <table className="table rounded-3 overflowx-hidden">
+      <div className="categories container ">
+      <div className="table-responsive pt-4">
+      <table className="table min-w-1000">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -96,8 +90,8 @@ export default function CategoriesList() {
                 </td>
                 <td>
                   <div className="dropdown">
-                    <i className="fa fa-ellipsis-h"data-bs-toggle="dropdown" aria-expanded="false"></i>
-                    <ul className="dropdown-menu actionDropdown">
+                    <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul className="dropdown-menu actionDropdown " >
                       <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-eye greenMain mx-2"></i>view</a></li>
                       <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
                       <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={()=>handleDeleteClick(category.id)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
@@ -108,7 +102,7 @@ export default function CategoriesList() {
             )): <tr> <td colSpan={4}><NoData/></td></tr> }
           </tbody>
         </table>
-
+            </div>
         {/* Pagination */}
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">

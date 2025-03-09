@@ -41,8 +41,9 @@
 .sidebarContainer .ps-menu-button {
     transition: all 0.3s;
 }
-.sidebarContainer .active{
-    background-color: rgba(47, 140, 96, 0.1) !important;
+/* class="ps-menuitem-root mb-3 css-1t8x7v1" */
+.sidebarContainer  .active{
+    background-color: rgba(47, 140, 96, 0.3) !important;
     border-left: 5px solid rgb(47, 140, 96);
 }
 .sidebarContainer .logoLi a:hover {
@@ -90,7 +91,7 @@
     color: #009247;
 }
 .greenMainBg{
-    background-color: #009247 !;
+    background-color: #009247 !important;
 }
 .actionDropdown{
     transform: translate3d(-99.6364px, -73.0909px, 0px) !important;
@@ -115,3 +116,24 @@
 .overflowx-auto{
     overflow-x: auto;
 }
+.min-w-1000{
+    min-width: 800px;
+}
+html, body {
+    overflow-x: hidden;
+  }
+  .css-1wvake5{
+    border: 0px !important;
+  }
+
+  /* .customLocation{
+    width: fit-content !important;
+    height: fit-content !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+} */
+ .changePassForm input::placeholder{
+    color: #8391A1;
+    font-size: 14px;
+ }
