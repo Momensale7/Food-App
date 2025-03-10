@@ -23,3 +23,7 @@ export const CONFIRM_PASS_VALIDATION = (password) => (
     validate: value => value === password || 'Passwords do not match'
   })
 
+  export const CATEGORY_VALIDATION =
+  {
+      required: 'Name is required',
+  }

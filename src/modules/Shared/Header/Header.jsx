@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
 export default function Header({title,subTitle,description,image}) {
   return (
+    <>
     <div className='container mt-3'>
       <div className="header-bg">
         <div className="row align-items-center justify-content-between">
@@ -19,5 +19,6 @@ export default function Header({title,subTitle,description,image}) {
         </div>
       </div>
     </div>
+    </>
   )
 }

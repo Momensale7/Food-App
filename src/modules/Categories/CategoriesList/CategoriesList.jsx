@@ -7,6 +7,7 @@ import NoData from '../../Shared/NoData/NoData';
 import { privateAxiosInstance, CATEGORIES_URLS } from '../../services/urls/urls';
 import Loading from '../../Shared/Loading/Loading';
 import { Bounce, toast } from 'react-toastify';
+import CategoriesData from '../CategoriesData/CategoriesData';
 
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
@@ -14,7 +15,10 @@ export default function CategoriesList() {
   const [pageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [itemToUpdateName, setItemToUpdateName] = useState(null);
+  const [itemToUpdateId, setItemToUpdateId] = useState(null);
   const [isloading, setIsLoading] = useState(false);
   const getCategories = async () => {
     setIsLoading(true);
@@ -47,6 +51,11 @@ export default function CategoriesList() {
     setItemToDelete(itemId);
     setShowModal(true);
 };
+ const handleUpdateClick = (itemId,itemName) => {
+  setItemToUpdateName(itemName);
+  setItemToUpdateId(itemId);
+    setShowUpdateModal(true); 
+  }
   const handleConfirmDelete = async() => {
     console.log('Deleting item with ID:', itemToDelete);
     try {
@@ -120,7 +129,7 @@ export default function CategoriesList() {
                     <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
                     <ul className="dropdown-menu actionDropdown " >
                       <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-eye greenMain mx-2"></i>view</a></li>
-                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
+                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={()=>handleUpdateClick(category?.id , category?.name)} ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
                       <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={()=>handleDeleteClick(category?.id)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
                     </ul>
                   </div>
@@ -167,6 +176,8 @@ export default function CategoriesList() {
                 onConfirm={handleConfirmDelete}
                 message="Delete This Category ?"
             />
+                  <CategoriesData type={"update"} show={showUpdateModal} onClose={()=>setShowUpdateModal(false)}  categoryId={itemToUpdateId} categoryName={itemToUpdateName}  />
+
       </div>
     </>
   );

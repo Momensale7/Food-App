@@ -23,5 +23,7 @@ export const RECIPES_URLS={
 }
 export const CATEGORIES_URLS={
     CATEGORIES_LIST:`/Category`,
+    POST_CATEGORY:`/Category`,
+    UPDATE_CATEGORY:(id)=>`/Category/${id}`,
      DELETE_CATEGORY:(id)=>`/Category/${id}`
 }
