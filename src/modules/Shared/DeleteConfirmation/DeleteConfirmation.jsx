@@ -7,7 +7,7 @@ export default function DeleteConfirmation({
   onConfirm, 
   message 
 }) {
-  if (!show) return null; // Don't render if modal is not visible
+  if (!show) return null; 
   return (
     <>
       <div className="modal show d-block" tabIndex="-1" role="dialog">
@@ -27,7 +27,7 @@ export default function DeleteConfirmation({
                     </div>
                     <div className="modal-footer border-0">
                         <button type="button" className="btn border-danger text-danger" onClick={onConfirm}>
-                            Delete
+                            Delete This Item
                         </button>
                     </div>
                 </div>

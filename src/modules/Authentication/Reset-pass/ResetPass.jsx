@@ -21,7 +21,7 @@ export default function ResetPass() {
     try {
       const response = await puplicAxiosInstance.post(USER_URLS.RESET_PASS, data);
       // console.log(response);
-      toast.success(response.data.message, {
+      toast.success(response?.data?.message, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -35,7 +35,7 @@ export default function ResetPass() {
       navigate('/login');
     } catch (error) {
       // console.log(error);
-      toast.error(`${error.response.data.message}`, {
+      toast.error(`${error?.response?.data?.message}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

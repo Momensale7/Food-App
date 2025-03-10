@@ -6,6 +6,9 @@ import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmati
 import SubHeader from '../../Shared/SubHeader/SubHeader';
 import NoData from '../../Shared/NoData/NoData';
 import { privateAxiosInstance, RECIPES_URLS } from '../../services/urls/urls';
+import Loading from '../../Shared/Loading/Loading';
+import staticRecipe from '../../../assets/images/recipe.jpg';
+import { Bounce, toast } from 'react-toastify';
 
 export default function RecipesList() {
   const [recipes, setRecipes] = useState([]);
@@ -14,7 +17,9 @@ export default function RecipesList() {
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [isLoading,setIsLoading]= useState()
   const getRecipes = async () => {
+    setIsLoading(true);
     try {
       let response = await privateAxiosInstance.get(RECIPES_URLS.RECIPES_LIST, {
         params: {
@@ -28,6 +33,7 @@ export default function RecipesList() {
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
+    setIsLoading(false);  
   };
 
   useEffect(() => {
@@ -48,9 +54,31 @@ export default function RecipesList() {
     console.log('Deleting item with ID:', itemToDelete);
     try {
       let response = await privateAxiosInstance.delete(RECIPES_URLS.DELETE_RECIPE(itemToDelete),);
+       toast.success('item deleted successfully', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                  });
       getRecipes();
     } catch (error) {
-      console.error('Error deleting recipe:', error);
+      toast.error(`${error?.response?.data?.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      // console.error('Error deleting recipe:', error);
     }
     setShowModal(false);
 };
@@ -64,8 +92,8 @@ export default function RecipesList() {
       />
             <SubHeader title={"Recipe Table Details"} description ={"You can check all details"} btnContent={"Add New item"}/>
       
-      <div className="categories container mt-2 ">
-      <div className="table-responsive">
+      <div className="categories container ">
+      <div className="table-responsive pt-5">
   <table className="table min-w-1000">
     <thead>
       <tr>
@@ -79,13 +107,14 @@ export default function RecipesList() {
       </tr>
     </thead>
     <tbody>
-      {recipes.length > 0 ? recipes.map((recipe, index) => (
+      {isLoading?<tr><td colSpan={7}><Loading /></td></tr>:
+      recipes.length > 0 ? recipes.map((recipe, index) => (
         <tr key={index}>
           <td>{recipe?.name}</td>
-          <td><img src={'https://upskilling-egypt.com:3006/'+recipe?.imagePath} alt={recipe?.name} className='recipeImg' /></td>
-          <td>{recipe?.price}</td>
+          <td><img src={'https://upskilling-egypt.com:3006/'+recipe?.imagePath || staticRecipe} alt={recipe?.name} className='recipeImg' /></td>
+          <td>{`${recipe?.price} $ `}</td>
           <td>{recipe?.description}</td>
-          <td>{recipe?.category?.map(category => category.name).join(', ')}</td>
+          <td>{recipe?.category?.map(category => category?.name).join(', ')}</td>
           <td>{recipe?.tag?.name}</td>
           <td>
             <div className="dropdown">

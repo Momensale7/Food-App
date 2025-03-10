@@ -19,7 +19,7 @@ export const USER_URLS={
 }
 export const RECIPES_URLS={
     RECIPES_LIST:`/Recipe`,
-    DELETE_RECIPE:(id)=>`/Recipe${id}`
+    DELETE_RECIPE:(id)=>`/Recipe/${id}`
 }
 export const CATEGORIES_URLS={
     CATEGORIES_LIST:`/Category`,

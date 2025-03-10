@@ -12,7 +12,7 @@ export default function ForgetPass() {
     try {
       let response = await puplicAxiosInstance.post(USER_URLS.FORGET_PASS, data)
       // console.log(response);
-      toast.success(response.data.message, {
+      toast.success(response?.data?.message, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -27,7 +27,7 @@ export default function ForgetPass() {
 
     } catch (error) {
       // console.log(error);
-      toast.error(`${error.response.data.message}`, {
+      toast.error(`${error?.response?.data?.message}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

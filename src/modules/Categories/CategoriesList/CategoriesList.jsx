@@ -5,6 +5,8 @@ import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmati
 import SubHeader from '../../Shared/SubHeader/SubHeader';
 import NoData from '../../Shared/NoData/NoData';
 import { privateAxiosInstance, CATEGORIES_URLS } from '../../services/urls/urls';
+import Loading from '../../Shared/Loading/Loading';
+import { Bounce, toast } from 'react-toastify';
 
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
@@ -13,7 +15,9 @@ export default function CategoriesList() {
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [isloading, setIsLoading] = useState(false);
   const getCategories = async () => {
+    setIsLoading(true);
     try {
       let response = await privateAxiosInstance.get(CATEGORIES_URLS.CATEGORIES_LIST, {
         params: {
@@ -21,11 +25,12 @@ export default function CategoriesList() {
           pageSize
         }
       });
-      setCategories(response.data.data);
-      setTotalPages(response.data.totalNumberOfPages);
+      setCategories(response?.data?.data);
+      setTotalPages(response?.data?.totalNumberOfPages);
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -46,13 +51,34 @@ export default function CategoriesList() {
     console.log('Deleting item with ID:', itemToDelete);
     try {
       let response = await privateAxiosInstance.delete(CATEGORIES_URLS.DELETE_CATEGORY(itemToDelete),);
+       toast.success('item deleted successfully', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Bounce,
+            });
       getCategories();
     } catch (error) {
+      toast.error(`${error?.response?.data?.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       console.error('Error deleting categories:', error);
     }
     setShowModal(false);
 };
-
   return (
     <>
       <Header
@@ -74,7 +100,8 @@ export default function CategoriesList() {
             </tr>
           </thead>
           <tbody>
-            {categories.length >0? categories.map((category, index) => (
+            {isloading ? <tr><td colSpan={4}><Loading/></td></tr> :
+          categories.length >0? categories.map((category, index) => (
               <tr key={index}>
                 <td>{category?.id}</td>
                 <td>{category?.name}</td>
@@ -94,7 +121,7 @@ export default function CategoriesList() {
                     <ul className="dropdown-menu actionDropdown " >
                       <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-eye greenMain mx-2"></i>view</a></li>
                       <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
-                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={()=>handleDeleteClick(category.id)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
+                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={()=>handleDeleteClick(category?.id)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
                     </ul>
                   </div>
                 </td>

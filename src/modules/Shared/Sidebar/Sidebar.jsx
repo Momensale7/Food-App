@@ -1,11 +1,11 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { Menu, MenuItem, Sidebar, SubMenu } from 'react-pro-sidebar'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import sideBarLogo from '../../../assets/images/sideLogo.png'
 import ChangePass from '../../Authentication/Change-pass/Change-pass'
 
-export default function SideBar() {
-  const [collapsed, setCollapsed] = useState(false)
+export default function SideBar({collapsed,setCollapsed}) {
   const [showchangePass, setShowChangePass] = useState(false)
 
   // const activeItem = showchangePass ? "changePass" : null
@@ -28,7 +28,7 @@ export default function SideBar() {
   return (
     <>
       <div className="sidebarContainer ">
-        <Sidebar collapsed={collapsed} >
+        <Sidebar collapsed={collapsed} className='position-fixed' >
           <Menu>
             <MenuItem className='logoLi' onClick={toggleCollapse} icon={<img className={`${collapsed ? 'logocollapsed' : "ms-5"} sidebarlogo`} src={sideBarLogo}></img>}></MenuItem>
             {menuItems.map((item, index) => (
