@@ -4,7 +4,7 @@ import { CATEGORY_VALIDATION } from '../../services/validation/validation';
 import { useForm } from 'react-hook-form';
 import { Bounce, toast } from 'react-toastify';
 
-export default function CategoriesData({ show, onClose, categoryId, categoryName, type }) {
+export default function CategoriesData({ show, onClose, categoryId, categoryName, type ,getCategories }) {
   let { register, formState: { errors, isSubmitting }, handleSubmit ,setValue } = useForm({defaultValues:{name:name}})
   const onSubmit = async (data) => {
     // console.log('hiiiiiii',data);
@@ -28,10 +28,11 @@ export default function CategoriesData({ show, onClose, categoryId, categoryName
         theme: "light",
         transition: Bounce,
       });
+      getCategories()
       onClose();
     } catch (error) {
-      // console.log(error);
-      toast.error(`${error?.response?.data?.message}`, {
+      console.log(error);
+      toast.error(`${error?.response?.data?.message || "faild to process"}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -49,17 +50,17 @@ export default function CategoriesData({ show, onClose, categoryId, categoryName
   useEffect(()=>{
     setValue("name",categoryName)
     console.log("thid is name",name);
-    
+     
     // console.log(categoryId, categoryName ,type)
   },[categoryId, categoryName,type,show])
   if (!show) return null;
 
   return (
     <>
-      <div className="modal show d-block" tabIndex="-1" role="dialog">
-        <div className="modal-dialog" role="document">
+      <div className="modal categoryModal show d-flex align-items-center " tabIndex="-1" role="dialog">
+        <div className="modal-dialog w-100 mt-5 pt-5 " role="document">
           <div className="modal-content">
-            <div className="modal-header border-0 pb-5 ">
+            <div className="modal-header border-0 pb-5 align-items-center"> 
               <h5 className="modal-title text-dark-main">Add New Category</h5>
               <div className="closeBtn ms-auto d-flex justify-content-center align-items-center">
                 <i className="fa fa-close  text-danger" onClick={onClose}></i>

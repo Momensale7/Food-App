@@ -50,27 +50,27 @@ export default function CategoriesList() {
   const handleDeleteClick = (itemId) => {
     setItemToDelete(itemId);
     setShowModal(true);
-};
- const handleUpdateClick = (itemId,itemName) => {
-  setItemToUpdateName(itemName);
-  setItemToUpdateId(itemId);
-    setShowUpdateModal(true); 
+  };
+  const handleUpdateClick = (itemId, itemName) => {
+    setItemToUpdateName(itemName);
+    setItemToUpdateId(itemId);
+    setShowUpdateModal(true);
   }
-  const handleConfirmDelete = async() => {
+  const handleConfirmDelete = async () => {
     console.log('Deleting item with ID:', itemToDelete);
     try {
       let response = await privateAxiosInstance.delete(CATEGORIES_URLS.DELETE_CATEGORY(itemToDelete),);
-       toast.success('item deleted successfully', {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              transition: Bounce,
-            });
+      toast.success('item deleted successfully', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       getCategories();
     } catch (error) {
       toast.error(`${error?.response?.data?.message}`, {
@@ -87,7 +87,7 @@ export default function CategoriesList() {
       console.error('Error deleting categories:', error);
     }
     setShowModal(false);
-};
+  };
   return (
     <>
       <Header
@@ -96,49 +96,53 @@ export default function CategoriesList() {
         description="You can now add your items that any user can order it from the Application and you can edit"
         image={headerImage}
       />
-      <SubHeader title={"Categories Table Details"} description ={"You can check all details"} btnContent={"Add New Category"}/>
+      <SubHeader getCategories={getCategories}
+        title={"Categories Table Details"}
+        description={"You can check all details"}
+        btnContent={"Add New Category"}
+      />
       <div className="categories container ">
-      <div className="table-responsive pt-4">
-      <table className="table min-w-1000">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Creation Date</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isloading ? <tr><td colSpan={4}><Loading/></td></tr> :
-          categories.length >0? categories.map((category, index) => (
-              <tr key={index}>
-                <td>{category?.id}</td>
-                <td>{category?.name}</td>
-                <td>
-                  {new Date(category?.creationDate).toLocaleString('en-GB', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                  })}
-                </td>
-                <td>
-                  <div className="dropdown">
-                    <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                    <ul className="dropdown-menu actionDropdown " >
-                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-eye greenMain mx-2"></i>view</a></li>
-                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={()=>handleUpdateClick(category?.id , category?.name)} ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
-                      <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={()=>handleDeleteClick(category?.id)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
-                    </ul>
-                  </div>
-                </td>
+        <div className="table-responsive pt-4">
+          <table className="table min-w-1000">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Action</th>
               </tr>
-            )): <tr> <td colSpan={4}><NoData/></td></tr> }
-          </tbody>
-        </table>
-            </div>
+            </thead>
+            <tbody>
+              {isloading ? <tr><td colSpan={4}><Loading /></td></tr> :
+                categories.length > 0 ? categories.map((category, index) => (
+                  <tr key={index}>
+                    <td>{category?.id}</td>
+                    <td>{category?.name}</td>
+                    <td>
+                      {new Date(category?.creationDate).toLocaleString('en-GB', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })}
+                    </td>
+                    <td>
+                      <div className="dropdown">
+                        <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                        <ul className="dropdown-menu actionDropdown " >
+                          <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-eye greenMain mx-2"></i>view</a></li>
+                          <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={() => handleUpdateClick(category?.id, category?.name)} ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
+                          <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(category?.id)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                )) : <tr> <td colSpan={4}><NoData /></td></tr>}
+            </tbody>
+          </table>
+        </div>
         {/* Pagination */}
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">
@@ -171,12 +175,18 @@ export default function CategoriesList() {
           </ul>
         </nav>
         <DeleteConfirmation
-                show={showModal}
-                onClose={() => setShowModal(false)}
-                onConfirm={handleConfirmDelete}
-                message="Delete This Category ?"
-            />
-                  <CategoriesData type={"update"} show={showUpdateModal} onClose={()=>setShowUpdateModal(false)}  categoryId={itemToUpdateId} categoryName={itemToUpdateName}  />
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          onConfirm={handleConfirmDelete}
+          message="Delete This Category ?"
+        />
+        <CategoriesData
+          type={"update"}
+          show={showUpdateModal}
+          onClose={() => setShowUpdateModal(false)}
+          categoryId={itemToUpdateId}
+          getCategories={getCategories}
+          categoryName={itemToUpdateName} />
 
       </div>
     </>

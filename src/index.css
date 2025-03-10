@@ -179,4 +179,8 @@ html, body {
         margin-left: 80px; /* When collapsed */
         width: calc(100% - 80px);
       }
+
+      .modal.categoryModal {
+        --bs-modal-width: 365px;
+      }
       
