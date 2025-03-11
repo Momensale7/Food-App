@@ -1,6 +1,7 @@
 import axios from "axios"
 
 export const baseURL= "https://upskilling-egypt.com:3006/api/v1"
+export const imgURL="https://upskilling-egypt.com:3006/"
 export const puplicAxiosInstance =axios.create({
     baseURL
 })
@@ -15,6 +16,8 @@ export const USER_URLS={
     FORGET_PASS:`/Users/Reset/Request`,
     RESET_PASS:`/Users/Reset`,
     CHANGE_PASS:`/Users/ChangePassword`,
+    GET_USERS:`/Users`,
+    DELETE_USER:(id)=>`/Users/${id}`,
     GET_USER:(id)=>`/Users/USER/${id}`
 }
 export const RECIPES_URLS={

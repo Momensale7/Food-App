@@ -5,7 +5,7 @@ import axios from 'axios';
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation';
 import SubHeader from '../../Shared/SubHeader/SubHeader';
 import NoData from '../../Shared/NoData/NoData';
-import { privateAxiosInstance, RECIPES_URLS } from '../../services/urls/urls';
+import { imgURL, privateAxiosInstance, RECIPES_URLS } from '../../services/urls/urls';
 import Loading from '../../Shared/Loading/Loading';
 import staticRecipe from '../../../assets/images/recipe.jpg';
 import { Bounce, toast } from 'react-toastify';
@@ -111,7 +111,8 @@ export default function RecipesList() {
       recipes.length > 0 ? recipes.map((recipe, index) => (
         <tr key={index}>
           <td>{recipe?.name}</td>
-          <td><img src={'https://upskilling-egypt.com:3006/'+recipe?.imagePath || staticRecipe} alt={recipe?.name} className='recipeImg' /></td>
+          <td><img src={recipe?.imagePath ? imgURL+recipe?.imagePath : staticRecipe} 
+          alt={recipe?.name} className='recipeImg' /></td>
           <td>{`${recipe?.price} $ `}</td>
           <td>{recipe?.description}</td>
           <td>{recipe?.category?.map(category => category?.name).join(', ')}</td>
