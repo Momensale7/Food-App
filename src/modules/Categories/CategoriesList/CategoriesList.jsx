@@ -8,6 +8,7 @@ import { privateAxiosInstance, CATEGORIES_URLS } from '../../services/urls/urls'
 import Loading from '../../Shared/Loading/Loading';
 import { Bounce, toast } from 'react-toastify';
 import CategoriesData from '../CategoriesData/CategoriesData';
+import Pagination from '../../Shared/Pagination/Pagination';
 
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
@@ -17,6 +18,7 @@ export default function CategoriesList() {
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [itemToDeleteName, setItemToDeleteName] = useState(null);
   const [itemToUpdateName, setItemToUpdateName] = useState(null);
   const [itemToUpdateId, setItemToUpdateId] = useState(null);
   const [isloading, setIsLoading] = useState(false);
@@ -47,7 +49,8 @@ export default function CategoriesList() {
       setPageNumber(newPageNumber);
     }
   };
-  const handleDeleteClick = (itemId) => {
+  const handleDeleteClick = (itemId,itemToDeleteName) => {
+    setItemToDeleteName(itemToDeleteName)
     setItemToDelete(itemId);
     setShowModal(true);
   };
@@ -134,7 +137,7 @@ export default function CategoriesList() {
                         <ul className="dropdown-menu actionDropdown " >
                           <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-eye greenMain mx-2"></i>view</a></li>
                           <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={() => handleUpdateClick(category?.id, category?.name)} ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
-                          <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(category?.id)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
+                          <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(category?.id , category?.name)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
                         </ul>
                       </div>
                     </td>
@@ -144,41 +147,12 @@ export default function CategoriesList() {
           </table>
         </div>
         {/* Pagination */}
-        <nav aria-label="Page navigation example">
-          <ul className="pagination justify-content-center">
-            <li className={`page-item ${pageNumber === 1 ? 'disabled' : ''}`}>
-              <button
-                className="page-link"
-                onClick={() => handlePageChange(pageNumber - 1)}
-              >
-                Previous
-              </button>
-            </li>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <li key={i} className={`page-item ${pageNumber === i + 1 ? 'active' : ''}`}>
-                <button
-                  className="page-link"
-                  onClick={() => handlePageChange(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              </li>
-            ))}
-            <li className={`page-item ${pageNumber === totalPages ? 'disabled' : ''}`}>
-              <button
-                className="page-link"
-                onClick={() => handlePageChange(pageNumber + 1)}
-              >
-                Next
-              </button>
-            </li>
-          </ul>
-        </nav>
+        <Pagination pageNumber={pageNumber} handlePageChange={handlePageChange} totalPages={totalPages} />
         <DeleteConfirmation
           show={showModal}
           onClose={() => setShowModal(false)}
           onConfirm={handleConfirmDelete}
-          message="Delete This Category ?"
+          message={`Delete This Category  ${itemToDeleteName} ?`}
         />
         <CategoriesData
           type={"update"}

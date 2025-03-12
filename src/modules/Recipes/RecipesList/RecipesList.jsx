@@ -9,6 +9,7 @@ import { imgURL, privateAxiosInstance, RECIPES_URLS } from '../../services/urls/
 import Loading from '../../Shared/Loading/Loading';
 import staticRecipe from '../../../assets/images/recipe.jpg';
 import { Bounce, toast } from 'react-toastify';
+import Pagination from '../../Shared/Pagination/Pagination';
 
 export default function RecipesList() {
   const [recipes, setRecipes] = useState([]);
@@ -17,6 +18,7 @@ export default function RecipesList() {
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [itemToDeleteName, setItemToDeleteName] = useState(null);
   const [isLoading,setIsLoading]= useState()
   const getRecipes = async () => {
     setIsLoading(true);
@@ -46,7 +48,8 @@ export default function RecipesList() {
       setPageNumber(newPageNumber);
     }
   };
-  const handleDeleteClick = (itemId) => {
+  const handleDeleteClick = (itemId,itemToDeleteName) => {
+    setItemToDeleteName(itemToDeleteName);
     setItemToDelete(itemId);
     setShowModal(true);
 };
@@ -123,7 +126,7 @@ export default function RecipesList() {
               <ul className="dropdown-menu actionDropdown">
                 <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
                 <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-edit greenMain mx-2"></i>Edit</a></li>
-                <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(recipe.id)}><i className="fa fa-trash greenMain mx-2"></i>Delete</a></li>
+                <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(recipe?.id,recipe?.name)}><i className="fa fa-trash greenMain mx-2"></i>Delete</a></li>
               </ul>
             </div>
           </td>
@@ -134,41 +137,13 @@ export default function RecipesList() {
 </div>
 
         {/* Pagination */}
-        <nav aria-label="Page navigation example">
-          <ul className="pagination justify-content-center">
-            <li className={`page-item ${pageNumber === 1 ? 'disabled' : ''}`}>
-              <button
-                className="page-link"
-                onClick={() => handlePageChange(pageNumber - 1)}
-              >
-                Previous
-              </button>
-            </li>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <li key={i} className={`page-item ${pageNumber === i + 1 ? 'active' : ''}`}>
-                <button
-                  className="page-link"
-                  onClick={() => handlePageChange(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              </li>
-            ))}
-            <li className={`page-item ${pageNumber === totalPages ? 'disabled' : ''}`}>
-              <button
-                className="page-link"
-                onClick={() => handlePageChange(pageNumber + 1)}
-              >
-                Next
-              </button>
-            </li>
-          </ul>
-        </nav>
+               <Pagination pageNumber={pageNumber} handlePageChange={handlePageChange} totalPages={totalPages}/>
+       
         <DeleteConfirmation
                 show={showModal}
                 onClose={() => setShowModal(false)}
                 onConfirm={handleConfirmDelete}
-                message="Delete This recipe ?"
+                message={`Delete This recipe ${itemToDeleteName} ?`}
             />
       </div>
     </>

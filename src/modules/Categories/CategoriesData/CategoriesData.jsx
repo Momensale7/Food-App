@@ -17,7 +17,7 @@ export default function CategoriesData({ show, onClose, categoryId, categoryName
       // eslint-disable-next-line no-redeclare
       var response = await puplicAxiosInstance.post(CATEGORIES_URLS.POST_CATEGORY, data)
       }
-      toast.success(response?.data?.message || "category added successfully", {
+      toast.success(response?.data?.message || (type=="add"?"category added successfully":"category updated successfully"), {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

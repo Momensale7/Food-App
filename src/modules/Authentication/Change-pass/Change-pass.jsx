@@ -16,7 +16,8 @@ export default function ChangePass({ onClose, show }) {
     formState: { errors, isSubmitting },
     handleSubmit,
     watch,
-    trigger
+    trigger,
+    reset,
   } = useForm({ mood: "onchange" });
   const onSubmit = async (data) => {
     console.log(data);
@@ -34,6 +35,9 @@ export default function ChangePass({ onClose, show }) {
         theme: "light",
         transition: Bounce,
       });
+      reset();
+      onClose();
+
     } catch (error) {
       // console.log(error);
       toast.error(`${error?.response?.data?.message}`, {
