@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { Bounce, toast } from 'react-toastify';
-import { privateAxiosInstance, USER_URLS } from '../../services/urls/urls';
 import { useForm } from 'react-hook-form';
 import { CONFIRM_PASS_VALIDATION, PASSWORD_VALIDATION } from '../../services/validation/validation';
 import logo from "../../../assets/images/logo_1.png";
+import { privateAxiosInstance } from '../../services/api/apiInstance';
+import { USER_URLS } from '../../services/api/apiConfig';
 
 
 export default function ChangePass({ onClose, show }) {

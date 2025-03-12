@@ -4,16 +4,17 @@ import Header from '../../Shared/Header/Header';
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation';
 import SubHeader from '../../Shared/SubHeader/SubHeader';
 import NoData from '../../Shared/NoData/NoData';
-import { privateAxiosInstance, CATEGORIES_URLS } from '../../services/urls/urls';
 import Loading from '../../Shared/Loading/Loading';
 import { Bounce, toast } from 'react-toastify';
 import CategoriesData from '../CategoriesData/CategoriesData';
 import Pagination from '../../Shared/Pagination/Pagination';
+import { privateAxiosInstance } from '../../services/api/apiInstance';
+import { CATEGORIES_URLS } from '../../services/api/apiConfig';
 
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(5);
+  const [pageSize] = useState(8);
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -25,7 +26,7 @@ export default function CategoriesList() {
   const getCategories = async () => {
     setIsLoading(true);
     try {
-      let response = await privateAxiosInstance.get(CATEGORIES_URLS.CATEGORIES_LIST, {
+      let response = await privateAxiosInstance.get(CATEGORIES_URLS.GET_CATEGORIES, {
         params: {
           pageNumber,
           pageSize

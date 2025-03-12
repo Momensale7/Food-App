@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { CATEGORIES_URLS, privateAxiosInstance, puplicAxiosInstance } from '../../services/urls/urls';
 import { CATEGORY_VALIDATION } from '../../services/validation/validation';
 import { useForm } from 'react-hook-form';
 import { Bounce, toast } from 'react-toastify';
+import { privateAxiosInstance, puplicAxiosInstance } from '../../services/api/apiInstance';
+import { CATEGORIES_URLS } from '../../services/api/apiConfig';
 
 export default function CategoriesData({ show, onClose, categoryId, categoryName, type ,getCategories }) {
   let { register, formState: { errors, isSubmitting }, handleSubmit ,setValue } = useForm({defaultValues:{name:name}})

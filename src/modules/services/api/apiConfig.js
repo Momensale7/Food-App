@@ -1,14 +1,7 @@
-import axios from "axios"
 
 export const baseURL= "https://upskilling-egypt.com:3006/api/v1"
 export const imgURL="https://upskilling-egypt.com:3006/"
-export const puplicAxiosInstance =axios.create({
-    baseURL
-})
-export const privateAxiosInstance =axios.create({
-    baseURL,
-    headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
-})
+
 
 export const USER_URLS={
     LOGIN:`/Users/Login`,
@@ -21,11 +14,11 @@ export const USER_URLS={
     GET_USER:(id)=>`/Users/USER/${id}`
 }
 export const RECIPES_URLS={
-    RECIPES_LIST:`/Recipe`,
+    GET_RECIPES:`/Recipe`,
     DELETE_RECIPE:(id)=>`/Recipe/${id}`
 }
 export const CATEGORIES_URLS={
-    CATEGORIES_LIST:`/Category`,
+    GET_CATEGORIES:`/Category`,
     POST_CATEGORY:`/Category`,
     UPDATE_CATEGORY:(id)=>`/Category/${id}`,
      DELETE_CATEGORY:(id)=>`/Category/${id}`

@@ -2,8 +2,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
-import { puplicAxiosInstance, USER_URLS } from "../../services/urls/urls";
 import { CONFIRM_PASS_VALIDATION, EMAIL_VALIDATION, OTP_VALIDATION, PASSWORD_VALIDATION } from "../../services/validation/validation";
+import { puplicAxiosInstance } from "../../services/api/apiInstance";
+import { USER_URLS } from "../../services/api/apiConfig";
 
 export default function ResetPass() {
   const [showPassword, setShowPassword] = useState(false);

@@ -5,16 +5,17 @@ import axios from 'axios';
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation';
 import SubHeader from '../../Shared/SubHeader/SubHeader';
 import NoData from '../../Shared/NoData/NoData';
-import { imgURL, privateAxiosInstance, RECIPES_URLS } from '../../services/urls/urls';
 import Loading from '../../Shared/Loading/Loading';
 import staticRecipe from '../../../assets/images/recipe.jpg';
 import { Bounce, toast } from 'react-toastify';
 import Pagination from '../../Shared/Pagination/Pagination';
+import { privateAxiosInstance } from '../../services/api/apiInstance';
+import { imgURL, RECIPES_URLS } from '../../services/api/apiConfig';
 
 export default function RecipesList() {
   const [recipes, setRecipes] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(8);
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -23,7 +24,7 @@ export default function RecipesList() {
   const getRecipes = async () => {
     setIsLoading(true);
     try {
-      let response = await privateAxiosInstance.get(RECIPES_URLS.RECIPES_LIST, {
+      let response = await privateAxiosInstance.get(RECIPES_URLS.GET_RECIPES, {
         params: {
           pageNumber,
           pageSize

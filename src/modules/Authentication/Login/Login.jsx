@@ -3,8 +3,9 @@ import logo from "../../../assets/images/logo_1.png";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
-import { puplicAxiosInstance, USER_URLS } from "../../services/urls/urls";
 import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from "../../services/validation/validation";
+import { puplicAxiosInstance } from "../../services/api/apiInstance";
+import { USER_URLS } from "../../services/api/apiConfig";
 // eslint-disable-next-line react/prop-types
 export default function Login({ saveLoginData }) {
   let { register, formState: { errors,isSubmitting }, handleSubmit } = useForm()

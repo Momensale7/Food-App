@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { imgURL, privateAxiosInstance, USER_URLS } from "../../services/urls/urls";
 import { Bounce, toast } from "react-toastify";
 import Header from "../../Shared/Header/Header";
 import headerImg from '../../../assets/images/headerImg.png'
@@ -9,11 +8,13 @@ import staticImg from '../../../assets/images/staticUser.jpg'
 import NoData from "../../Shared/NoData/NoData";
 import DeleteConfirmation from "../../Shared/DeleteConfirmation/DeleteConfirmation";
 import Pagination from "../../Shared/Pagination/Pagination";
+import { privateAxiosInstance } from "../../services/api/apiInstance";
+import { imgURL, USER_URLS } from "../../services/api/apiConfig";
 
 export default function UsersList() {
   const [users, setUsers] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(8);
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
