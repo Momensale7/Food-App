@@ -19,12 +19,16 @@ import { useEffect, useState } from 'react'
 import ProtectedRoute from './modules/Shared/ProtectedRoute/ProtectedRoute'
 
 function App() {
-  const [loginData,setLoginData]=useState(null);
+  const [loginData, setLoginData] = useState(() => {
+    let token = localStorage.getItem("token");
+    return token ? jwtDecode(token) : null;
+  });
   let saveLoginData= () => {
-    let encodedToken= localStorage.getItem('token')
-      let decodedToken= jwtDecode(encodedToken)
-      setLoginData(decodedToken)
-      // console.log(loginData);
+    let encodedToken = localStorage.getItem("token");
+    if (encodedToken) {
+      let decodedToken = jwtDecode(encodedToken);
+      setLoginData(decodedToken);
+    }
   }
   
   useEffect(()=>{
