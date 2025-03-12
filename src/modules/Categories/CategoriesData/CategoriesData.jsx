@@ -12,13 +12,10 @@ export default function CategoriesData({ show, onClose, categoryId, categoryName
     
     try {
       
-      if (type =="update"){
-        var response = await privateAxiosInstance.put(CATEGORIES_URLS.UPDATE_CATEGORY(categoryId), data)
-      }else{
-      // eslint-disable-next-line no-redeclare
-      var response = await puplicAxiosInstance.post(CATEGORIES_URLS.POST_CATEGORY, data)
-      }
-      toast.success(response?.data?.message || (type=="add"?"category added successfully":"category updated successfully"), {
+      const response = type === "update"
+        ? await privateAxiosInstance.put(CATEGORIES_URLS.UPDATE_CATEGORY(categoryId), data)
+        : await puplicAxiosInstance.post(CATEGORIES_URLS.POST_CATEGORY, data);
+      toast.success(response?.data?.message || (type==="add"?"category added successfully":"category updated successfully"), {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -50,10 +47,8 @@ export default function CategoriesData({ show, onClose, categoryId, categoryName
   
   useEffect(()=>{
     setValue("name",categoryName)
-    console.log("thid is name",name);
-     
     // console.log(categoryId, categoryName ,type)
-  },[categoryId, categoryName,type,show])
+  },[categoryId, categoryName, type, show, setValue])
   if (!show) return null;
 
   return (
