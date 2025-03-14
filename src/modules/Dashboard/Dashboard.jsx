@@ -12,7 +12,7 @@ export default function Dashboard({ loginData }) {
         description={"you can now fill the meals easily using the table and form ,"}
         SubDescription={"click here and sill it with the table !"} 
         btnContent={"Fill Recipes"}
-        routeTo={"/dashboard/recipes-data"} />
+        routeTo={"/dashboard/recipes-data/new-recipe"} />
     </>
   )
 }
