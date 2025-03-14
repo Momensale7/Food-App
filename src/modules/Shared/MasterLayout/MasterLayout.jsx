@@ -5,7 +5,7 @@ import Navbar from '../Navbar/Navbar';
 import SideBar from '../Sidebar/Sidebar';
 
 export default function MasterLayout({ loginData }) {
-  const [collapsed, setCollapsed] = useState(false); // State for sidebar
+  const [collapsed, setCollapsed] = useState(window.innerWidth <= 900); 
 
   return (
     <div className="d-flex">

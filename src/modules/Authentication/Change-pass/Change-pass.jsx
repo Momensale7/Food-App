@@ -24,7 +24,7 @@ export default function ChangePass({ onClose, show }) {
     console.log(data);
     try {
       const response = await privateAxiosInstance.put(USER_URLS.CHANGE_PASS, data);
-      // console.log(response);
+      console.log(response);
       toast.success(response?.data?.message, {
         position: "top-center",
         autoClose: 5000,
@@ -40,8 +40,8 @@ export default function ChangePass({ onClose, show }) {
       onClose();
 
     } catch (error) {
-      // console.log(error);
-      toast.error(`${error?.response?.data?.message}`, {
+      console.log(error);
+      toast.error(`${error?.response?.data?.message || "error on changing Pass"}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

@@ -8,7 +8,7 @@ export default function Pagination({pageNumber, handlePageChange, totalPages}) {
     {/* Previous Button */}
     <li className={`page-item ${pageNumber === 1 ? 'disabled' : ''}`}>
       <button className="page-link" onClick={() => handlePageChange(pageNumber - 1)}>
-        Previous
+      <span aria-hidden="true">&laquo;</span>
       </button>
     </li>
 
@@ -29,7 +29,7 @@ export default function Pagination({pageNumber, handlePageChange, totalPages}) {
       .filter((num) => num !== 1 && num !== totalPages && num >= pageNumber - 3 && num <= pageNumber + 3)
       .map((num) => (
         <li key={num} className={`d-none d-lg-block  page-item ${pageNumber === num ? 'active' : ''}`}>
-          <button className="page-link" onClick={() => handlePageChange(num)}>{num}</button>
+          <button className="page-link num" onClick={() => handlePageChange(num)}>{num}</button>
         </li>
       ))}
 
@@ -43,14 +43,14 @@ export default function Pagination({pageNumber, handlePageChange, totalPages}) {
     {/* Last Page */}
     {totalPages > 1 && (
       <li className={`d-none d-lg-block  page-item ${pageNumber === totalPages ? 'active' : ''}`}>
-        <button className="page-link" onClick={() => handlePageChange(totalPages)}>{totalPages}</button>
+        <button className="page-link num" onClick={() => handlePageChange(totalPages)}>{totalPages}</button>
       </li>
     )}
 
     {/* Next Button */}
     <li className={`page-item ${pageNumber === totalPages ? 'disabled' : ''}`}>
       <button className="page-link" onClick={() => handlePageChange(pageNumber + 1)}>
-        Next
+      <span aria-hidden="true">&raquo;</span>
       </button>
     </li>
   </ul>

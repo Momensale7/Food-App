@@ -8,8 +8,6 @@ import ChangePass from '../../Authentication/Change-pass/Change-pass'
 export default function SideBar({collapsed,setCollapsed}) {
   const [showchangePass, setShowChangePass] = useState(false)
 
-  // const activeItem = showchangePass ? "changePass" : null
-
   let navigate = useNavigate()
   const toggleCollapse = () => {
     setCollapsed(!collapsed)
@@ -18,13 +16,13 @@ export default function SideBar({collapsed,setCollapsed}) {
     localStorage.removeItem('token')
     navigate('/login')
   }
-  const onClose = () => setShowChangePass(false)
   const menuItems = [
     { to: "/dashboard", icon: "fa-home", label: "Home" },
     { to: "users", icon: "fa-users", label: "Users" },
     { to: "recipes", icon: "fa-utensils", label: "Recipes" },
     { to: "categories", icon: "fa-list", label: "Categories" },
   ]
+  
   return (
     <>
       <div className="sidebarContainer ">

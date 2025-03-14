@@ -94,7 +94,7 @@ export default function RecipesList() {
         description="You can now add your items that any user can order it from the Application and you can edit"
         image={headerImage}
       />
-            <SubHeader title={"Recipe Table Details"} description ={"You can check all details"} btnContent={"Add New item"}/>
+            <SubHeader title={"Recipe Table Details"} description ={"You can check all details"} btnContent={"Add New item"} routeTo={"/dashboard/recipes-data"}/>
       
       <div className="categories container ">
       <div className="table-responsive pt-5">

@@ -183,4 +183,28 @@ html, body {
       .modal.categoryModal {
         --bs-modal-width: 365px;
       }
+      .recipeHeader {
+        background-color: #b7d5b5 ;
+      }
       
+      .active>.page-link, .page-link.active {
+        color: #1f263e !important;
+        background-color: #86f7bc !important;
+        border-color: #7afcb9 !important;
+    }
+    .num:focus {
+      z-index: 3;
+      color: #1f263e !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+    .num:focus {
+      z-index: 3;
+      color: #1f263e !important;
+      background-color: #a8f9cf !important;
+      box-shadow: none !important;
+  }
+  .page-link {
+    color: #1f263e !important;
+    text-decoration: none;
+}
