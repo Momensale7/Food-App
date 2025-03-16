@@ -211,3 +211,6 @@ html, body {
     color: #1f263e !important;
     text-decoration: none;
 }
+.customBorder {
+  border: 1px dashed rgba(0, 146, 71, 1)  !important;
+}

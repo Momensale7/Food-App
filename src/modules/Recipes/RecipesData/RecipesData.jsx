@@ -9,14 +9,27 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { REQUIRED_VALIDATION } from '../../services/validation/validation'
 import { privateAxiosInstance, puplicAxiosInstance } from '../../services/api/apiInstance'
 import { CATEGORIES_URLS, TAGS_URLS, RECIPES_URLS } from '../../services/api/apiConfig'
+import { useDropzone } from 'react-dropzone'
 
 export default function RecipesData() {
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    acceptedFiles
+  } = useDropzone({
+    accept: { 'image/*': [] },
+    multiple: false,
+    onDrop: (files) => {
+      setValue('recipeImage', files[0], { shouldValidate: true });  // Set file in react-hook-form
+    }
+  });
   let { register, formState: { errors, isSubmitting }, handleSubmit, reset, setValue } = useForm()
   const [tags, setTags] = useState([])
   const [categories, setCategories] = useState([])
   const navigate = useNavigate()
   const params = useParams()
-  const recipeId =params.recipeId
+  const recipeId = params.recipeId
 
   const onSubmit = async (data) => {
     try {
@@ -30,10 +43,10 @@ export default function RecipesData() {
         else formData.append(key, data[key]) // FIXED
       }
       console.log(formData);
-      
-      const response =  recipeId?
-      await privateAxiosInstance.put(RECIPES_URLS.UPDATE_RECIPE(recipeId), formData, {headers: {'Content-Type': 'multipart/form-data'}})
-    : await privateAxiosInstance.post(RECIPES_URLS.ADD_RECIPE, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+
+      const response = recipeId ?
+        await privateAxiosInstance.put(RECIPES_URLS.UPDATE_RECIPE(recipeId), formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        : await privateAxiosInstance.post(RECIPES_URLS.ADD_RECIPE, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
 
       // Handle successful response
       toast.success('Recipe added successfully!', {
@@ -86,37 +99,37 @@ export default function RecipesData() {
   }
 
   useEffect(() => {
-    (async ()=>{
-   
-        await getCategories()
-         await getTags()
-      
-       if (recipeId) {
-          const getRecipe=async ()=>{
-               const response =await privateAxiosInstance.get(RECIPES_URLS.GET_RECIPE(recipeId));
-               const recipe =response?.data
-               setValue('name', recipe?.name)
-               setValue('description', recipe?.description)
-               setValue('tagId', recipe?.tag.id)
-               setValue('price', recipe?.price)
-               setValue('categoriesIds', recipe?.category?.[0].id)
-             }
-             getRecipe();
-       
-       }
-     })()
+    (async () => {
+
+      await getCategories()
+      await getTags()
+
+      if (recipeId) {
+        const getRecipe = async () => {
+          const response = await privateAxiosInstance.get(RECIPES_URLS.GET_RECIPE(recipeId));
+          const recipe = response?.data
+          setValue('name', recipe?.name)
+          setValue('description', recipe?.description)
+          setValue('tagId', recipe?.tag.id)
+          setValue('price', recipe?.price)
+          setValue('categoriesIds', recipe?.category?.[0].id)
+        }
+        getRecipe();
+
+      }
+    })()
   }, [])
 
   return (
     <>
       <RecipeHeader
-        title={recipeId? "Edit the ":"Fill the "}
+        title={recipeId ? "Edit the " : "Fill the "}
         description={"you can now fill the meals easily using the table and form ,"}
         SubDescription={"click here and sill it with the table !"}
         btnContent={"All Recipes"}
         routeTo={"/dashboard/recipes"} />
       <div className="container">
-        <div className="text-muted mt-3 fs-3">{recipeId? "Edit item":"Add new item"}</div>
+        <div className="text-muted mt-3 fs-3">{recipeId ? "Edit item" : "Add new item"}</div>
         <div className="px-5 mt-5">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-group mb-3">
@@ -140,7 +153,10 @@ export default function RecipesData() {
             </div>
             <div className="input-group mb-3">
               <input {...register('price', REQUIRED_VALIDATION("price"))}
-                type="number" className="form-control bg-light border-0 " placeholder="price" aria-label="price" aria-describedby="basic-addon1" />
+                type="number" className="form-control bg-light border-0" placeholder="price" aria-label="price" aria-describedby="basic-addon1" />
+              <div className="input-group-append">
+                <span className="input-group-text border-0">$</span>
+              </div>
               {errors.price && <p className="text-danger mb-2 rounded-1 w-100">{errors.price.message}</p>}
             </div>
             <div className="input-group mb-3">
@@ -152,10 +168,34 @@ export default function RecipesData() {
               </select>
               {errors.categoriesIds && <p className="text-danger mb-2 rounded-1 w-100">{errors.categoriesIds.message}</p>}
             </div>
-            <div className="input-group mb-3">
-              <input type="file" className="form-control bg-light" placeholder='upload image' {...register('recipeImage')} />
-              {errors.recipeImage && <p className="text-danger mb-2 rounded-1 w-100">{errors.recipeImage.message}</p>}
-            </div>
+
+
+             <div className="mb-3 customBorder p-2">
+      <div
+        {...getRootProps()}
+        className={`form-control recipeHeader d-flex justify-content-center align-items-center text-center border-0  ${isDragActive ? 'bg-secondary bg-opacity-10' : ''}`}
+        style={{ cursor: 'pointer', minHeight: '50px' }}
+      >
+        <input {...getInputProps()} />
+        {
+          isDragActive
+            ? <p className="m-0">Drop the image here...</p>
+            : <div className='d-flex flex-column align-items-center'><i className='fa fa-upload'></i> <p className="m-0">Drag & Drop or <span className='greenMain'>Choose a Item Image </span>to Upload</p></div>
+        }
+      </div>
+
+      {/* Show file name */}
+      {acceptedFiles.length > 0 && (
+        <p className="text-success mt-2 mb-0">
+          Selected file: {acceptedFiles[0].name}
+        </p>
+      )}
+
+      {/* Validation error */}
+      {errors.recipeImage && (
+        <p className="text-danger mt-2 mb-0 rounded-1">{errors.recipeImage.message}</p>
+      )}
+    </div>
 
             <div className=" d-flex justify-content-end align-items-center mb-3" >
               <Link to={"/dashboard/recipes"} className='btn customBtn greenMain d-block'>Cancel</Link>
