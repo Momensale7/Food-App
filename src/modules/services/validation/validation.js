@@ -27,3 +27,7 @@ export const CONFIRM_PASS_VALIDATION = (password) => (
   {
       required: 'Name is required',
   }
+  export const REQUIRED_VALIDATION = (INPUT) => (
+  {
+      required:`${INPUT} is required`,
+  })

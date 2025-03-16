@@ -15,11 +15,17 @@ export const USER_URLS={
 }
 export const RECIPES_URLS={
     GET_RECIPES:`/Recipe`,
-    DELETE_RECIPE:(id)=>`/Recipe/${id}`
+    ADD_RECIPE:`/Recipe`,
+    DELETE_RECIPE:(id)=>`/Recipe/${id}`,
+    GET_RECIPE:(id)=>`/Recipe/${id}`,
+    UPDATE_RECIPE:(id)=>`/Recipe/${id}`
 }
 export const CATEGORIES_URLS={
     GET_CATEGORIES:`/Category`,
     POST_CATEGORY:`/Category`,
     UPDATE_CATEGORY:(id)=>`/Category/${id}`,
      DELETE_CATEGORY:(id)=>`/Category/${id}`
+}
+export const TAGS_URLS={
+    GET_TAGS:`/tag`,
 }

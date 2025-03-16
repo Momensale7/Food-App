@@ -23,11 +23,14 @@ export default function CategoriesList() {
   const [itemToUpdateName, setItemToUpdateName] = useState(null);
   const [itemToUpdateId, setItemToUpdateId] = useState(null);
   const [isloading, setIsLoading] = useState(false);
+  const [name, setName] = useState(null)
+
   const getCategories = async () => {
     setIsLoading(true);
     try {
       let response = await privateAxiosInstance.get(CATEGORIES_URLS.GET_CATEGORIES, {
         params: {
+          name,
           pageNumber,
           pageSize
         }
@@ -43,7 +46,7 @@ export default function CategoriesList() {
   useEffect(() => {
     getCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNumber]);
+  }, [name,pageNumber]);
 
   const handlePageChange = (newPageNumber) => {
     if (newPageNumber > 0 && newPageNumber <= totalPages) {
@@ -92,6 +95,10 @@ export default function CategoriesList() {
     }
     setShowModal(false);
   };
+  const handleNameValue=(e)=>{
+    setName(e.target.value)
+    setPageNumber(1)
+  }
   return (
     <>
       <Header
@@ -106,6 +113,9 @@ export default function CategoriesList() {
         btnContent={"Add New Category"}
       />
       <div className="categories container ">
+
+      <input type="search" className='form-control' placeholder='Enter category name' onInput={handleNameValue} />
+
         <div className="table-responsive pt-4">
           <table className="table min-w-1000">
             <thead>

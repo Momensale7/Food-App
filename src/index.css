@@ -88,7 +88,10 @@
     padding-block: 10px;    
 }
 .greenMain{
-    color: #009247;
+    color: #009247 !important;
+}
+.customBtn{
+  border: 1px solid #009247 !important;
 }
 .greenMainBg{
     background-color: #009247 !important;

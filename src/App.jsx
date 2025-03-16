@@ -58,7 +58,7 @@ function App() {
           {index:true,element:<Dashboard loginData={loginData} />},
           {path:"recipes",element:<RecipesList/>},
           {path:"recipes-data/new-recipe",element:<RecipesData/>},
-          {path:"recipes-data/:id",element:<RecipesData/>},
+          {path:"recipes-data/:recipeId",element:<RecipesData/>},
           {path:"categories",element:<CategoriesList/>},
           {path:"category",element:<CategoriesData/>},
           {path:"users",element:<UsersList/>},
