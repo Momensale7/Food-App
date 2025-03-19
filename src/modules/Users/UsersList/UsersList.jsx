@@ -19,6 +19,11 @@ export default function UsersList() {
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [itemToDeleteName, setItemToDeleteName] = useState(null);
+  const [userName, setUserName] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [groups, setGroups] = useState(null);
+
 
   const [isLoading, setIsLoading] = useState()
   const getUsers = async () => {
@@ -26,6 +31,10 @@ export default function UsersList() {
     try {
       let response = await privateAxiosInstance.get(USER_URLS.GET_USERS, {
         params: {
+          userName,
+          country,
+          email,
+          groups,
           pageNumber,
           pageSize
         }
@@ -42,14 +51,14 @@ export default function UsersList() {
   useEffect(() => {
     getUsers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNumber]);
+  }, [pageNumber, userName, country, email, groups]);
 
   const handlePageChange = (newPageNumber) => {
     if (newPageNumber > 0 && newPageNumber <= totalPages) {
       setPageNumber(newPageNumber);
     }
   };
-  const handleDeleteClick = (itemId,itemToDeleteName) => {
+  const handleDeleteClick = (itemId, itemToDeleteName) => {
     setItemToDelete(itemId);
     setItemToDeleteName(itemToDeleteName);
     setShowModal(true);
@@ -86,6 +95,23 @@ export default function UsersList() {
     }
     setShowModal(false);
   };
+  const handleuserNameValue = (e) => {
+    setUserName(e.target.value)
+    setPageNumber(1)
+  }
+  const handleCountryValue = (e) => {
+    setCountry(e.target.value)
+    setPageNumber(1)
+  }
+  const handleEmailValue = (e) => {
+    setEmail(e.target.value)
+    setPageNumber(1)
+  }
+  const handleGroupsValue = (e) => {
+    setGroups(e.target.value)
+    setPageNumber(1)
+  }
+
   return (
     <>
       <Header
@@ -97,6 +123,25 @@ export default function UsersList() {
       <SubHeader title={"Users Table Details"} description={"You can check all details"} />
 
       <div className="categories container ">
+        <div className="row gx-2 gy-2">
+          <div className="col-6 col-lg-3">
+          <input type="search" className='form-control' placeholder='Enter user name' onInput={handleuserNameValue} />
+          </div>
+          <div className="col-6 col-lg-3">
+          <input type="search" className='form-control' placeholder='Enter country name' onInput={handleCountryValue} />
+          </div>
+          <div className="col-6 col-lg-3">
+          <input type="search" className='form-control' placeholder='Enter email' onInput={handleEmailValue} />
+          </div>
+          <div className="col-6 col-lg-3">
+          <select name="" id="" onChange={handleGroupsValue} className='form-control'>
+            <option value="">Select group</option>
+            <option value="1">admin</option>
+            <option value="2">user</option>
+          </select>
+          </div>
+
+        </div>
         <div className="table-responsive pt-5">
           <table className="table min-w-1000">
             <thead>
@@ -116,8 +161,8 @@ export default function UsersList() {
                   <tr key={index}>
                     <td>{user?.id}</td>
                     <td>{user?.userName}</td>
-                    <td><img src={user?.imagePath? imgURL+ user?.imagePath : staticImg}
-                     alt={user?.name} className='recipeImg' /></td>
+                    <td><img src={user?.imagePath ? imgURL + user?.imagePath : staticImg}
+                      alt={user?.name} className='recipeImg' /></td>
                     <td>{user?.email}</td>
                     <td>{user?.country}</td>
                     <td>{user?.phoneNumber}</td>
@@ -127,7 +172,7 @@ export default function UsersList() {
                         <ul className="dropdown-menu actionDropdown">
                           <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
                           <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-edit greenMain mx-2"></i>Edit</a></li>
-                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(user?.id , user?.userName)}><i className="fa fa-trash greenMain mx-2"></i>Delete</a></li>
+                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(user?.id, user?.userName)}><i className="fa fa-trash greenMain mx-2"></i>Delete</a></li>
                         </ul>
                       </div>
                     </td>
@@ -137,7 +182,7 @@ export default function UsersList() {
           </table>
         </div>
 
-        <Pagination pageNumber={pageNumber} handlePageChange={handlePageChange} totalPages={totalPages}/>
+        <Pagination pageNumber={pageNumber} handlePageChange={handlePageChange} totalPages={totalPages} />
         <DeleteConfirmation
           show={showModal}
           onClose={() => setShowModal(false)}
