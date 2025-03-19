@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { REQUIRED_VALIDATION } from '../../services/validation/validation'
 import { privateAxiosInstance, puplicAxiosInstance } from '../../services/api/apiInstance'
-import { CATEGORIES_URLS, TAGS_URLS, RECIPES_URLS } from '../../services/api/apiConfig'
+import { CATEGORIES_URLS, TAGS_URLS, RECIPES_URLS, imgURL } from '../../services/api/apiConfig'
 import { useDropzone } from 'react-dropzone'
 import Loading from '../../Shared/Loading/Loading'
 
@@ -22,36 +22,45 @@ export default function RecipesData() {
     accept: { 'image/*': [] },
     multiple: false,
     onDrop: (files) => {
-      setValue('recipeImage', files[0], { shouldValidate: true });  
+      setValue('recipeImage', files[0], { shouldValidate: true });
     }
   });
   let { register, formState: { errors, isSubmitting }, handleSubmit, reset, setValue } = useForm()
   const [tags, setTags] = useState([])
   const [categories, setCategories] = useState([])
   const navigate = useNavigate()
-  const [isLoading,setIsLoading]=useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [updatedImg, setUpdatedImg] = useState(null)
   const params = useParams()
   const recipeId = params.recipeId
 
   const onSubmit = async (data) => {
     try {
       const formData = new FormData()
-      for (let key in data) {
-        if (key === "recipeImage") {
-          if (data.recipeImage && data.recipeImage[0]) {
-            formData.append('recipeImage', data.recipeImage[0])
-          }
-        }
-        else formData.append(key, data[key]) 
+
+      if (!data.recipeImage && updatedImg) {
+        const response = await fetch(imgURL + updatedImg);
+        const blob = await response.blob();
+
+        const file = new File([blob], updatedImg.split('/').pop(), { type: blob.type });
+
+        formData.append('recipeImage', file);
+      } else {
+        formData.append('recipeImage', data.recipeImage);
       }
-      console.log(formData);
+
+      for (let key in data) {
+        if (key !== 'recipeImage') {
+          formData.append(key, data[key]);
+        }
+      }
+
 
       const response = recipeId ?
         await privateAxiosInstance.put(RECIPES_URLS.UPDATE_RECIPE(recipeId), formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         : await privateAxiosInstance.post(RECIPES_URLS.ADD_RECIPE, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
 
-      // Handle successful response
-      toast.success(response?.data?.message || recipeId?'Recipe updated successfully!':'Recipe added successfully!', {
+      toast.success(response?.data?.message || recipeId ? 'Recipe updated successfully!' : 'Recipe added successfully!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -66,7 +75,7 @@ export default function RecipesData() {
 
     } catch (error) {
       console.error('Error adding recipe:', error)
-      toast.error(error.response?.data?.message || recipeId?'faild to update recipe' :'Failed to add recipe', {
+      toast.error(error.response?.data?.message || recipeId ? 'faild to update recipe' : 'Failed to add recipe', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -102,19 +111,22 @@ export default function RecipesData() {
 
   useEffect(() => {
     (async () => {
-setIsLoading(true)
+      setIsLoading(true)
       await getCategories()
       await getTags()
-setIsLoading(false)
+      setIsLoading(false)
       if (recipeId) {
         const getRecipe = async () => {
           const response = await privateAxiosInstance.get(RECIPES_URLS.GET_RECIPE(recipeId));
           const recipe = response?.data
+          console.log(recipe);
+
           setValue('name', recipe?.name)
           setValue('description', recipe?.description)
           setValue('tagId', recipe?.tag.id)
           setValue('price', recipe?.price)
           setValue('categoriesIds', recipe?.category?.[0].id)
+          setUpdatedImg(recipe?.imagePath)
         }
         getRecipe();
 
@@ -133,7 +145,7 @@ setIsLoading(false)
       <div className="container">
         <div className="text-muted mt-3 fs-6 px-3">{recipeId ? "Edit item" : "Add new item"}</div>
         <div className="px-5 mt-5">
-          {isLoading && recipeId?<Loading/>:<form onSubmit={handleSubmit(onSubmit)}>
+          {isLoading && recipeId ? <Loading /> : <form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-group mb-3">
               <input {...register('name', REQUIRED_VALIDATION("name"))}
                 type="text" className="form-control bg-light border-0 " placeholder="recipe name" aria-label="email" aria-describedby="basic-addon1" />
@@ -172,32 +184,45 @@ setIsLoading(false)
             </div>
 
 
-             <div className="mb-3 customBorder p-2">
-      <div
-        {...getRootProps()}
-        className={`form-control recipeHeader d-flex justify-content-center align-items-center text-center border-0  ${isDragActive ? 'bg-secondary bg-opacity-10' : ''}`}
-        style={{ cursor: 'pointer', minHeight: '50px' }}
-      >
-        <input {...getInputProps()} />
-        {
-          isDragActive
-            ? <p className="m-0">Drop the image here...</p>
-            : <div className='d-flex flex-column align-items-center'><i className='fa fa-upload'></i> <p className="m-0">Drag & Drop or <span className='greenMain'>Choose a Item Image </span>to Upload</p></div>
-        }
-      </div>
+            <div className="mb-3 customBorder p-2">
+              <div
+                {...getRootProps()}
+                className={`form-control recipeHeader d-flex justify-content-center align-items-center text-center border-0  ${isDragActive ? 'bg-secondary bg-opacity-10' : ''}`}
+                style={{ cursor: 'pointer', minHeight: '50px' }}
+              >
+                <input {...getInputProps()} />
+                {
+                  isDragActive
+                    ? <p className="m-0">Drop the image here...</p>
+                    : <div className='d-flex flex-column align-items-center'><i className='fa fa-upload'></i> <p className="m-0">Drag & Drop or <span className='greenMain'>Choose a Item Image </span>to Upload</p></div>
+                }
+              </div>
+              <div className="text-center">
+                {acceptedFiles.length > 0 ? (
+                  <img
+                    src={URL.createObjectURL(acceptedFiles[0])}
+                    alt="Selected preview"
+                    className='w-25 rounded'
+                  />
+                ) : updatedImg ? (
+                  <img
+                    src={imgURL + updatedImg}
+                    alt="Current recipe"
+                    className='w-25 rounded'
+                  />
+                ) : null}</div>
+              {/* Show file name */}
+              {acceptedFiles.length > 0 && (
+                <p className="text-success mt-2 mb-0">
+                  Selected file: {acceptedFiles[0].name}
+                </p>
+              )}
 
-      {/* Show file name */}
-      {acceptedFiles.length > 0 && (
-        <p className="text-success mt-2 mb-0">
-          Selected file: {acceptedFiles[0].name}
-        </p>
-      )}
-
-      {/* Validation error */}
-      {errors.recipeImage && (
-        <p className="text-danger mt-2 mb-0 rounded-1">{errors.recipeImage.message}</p>
-      )}
-    </div>
+              {/* Validation error */}
+              {errors.recipeImage && (
+                <p className="text-danger mt-2 mb-0 rounded-1">{errors.recipeImage.message}</p>
+              )}
+            </div>
 
             <div className=" d-flex justify-content-end align-items-center mb-3" >
               <Link to={"/dashboard/recipes"} className='btn customBtn greenMain d-block'>Cancel</Link>

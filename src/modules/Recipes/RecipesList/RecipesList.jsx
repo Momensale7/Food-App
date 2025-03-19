@@ -12,6 +12,7 @@ import Pagination from '../../Shared/Pagination/Pagination';
 import { privateAxiosInstance, puplicAxiosInstance } from '../../services/api/apiInstance';
 import { CATEGORIES_URLS, imgURL, RECIPES_URLS, TAGS_URLS } from '../../services/api/apiConfig';
 import { Link } from 'react-router-dom';
+import ItemDetails from '../../Shared/itemDetails/itemDetails';
 
 export default function RecipesList() {
   const [recipes, setRecipes] = useState([]);
@@ -27,6 +28,9 @@ export default function RecipesList() {
   const [tagId, setTagId] = useState(null)
   const [categoryId, setCategoryId] = useState(null)
   const [categories, setCategories] = useState([])
+  const [showITemDetails, setShowItemDetails] = useState(false)
+  const [itemToView, setItemToView] = useState(null)
+
   const getTags = async () => {
     try {
       let response = await puplicAxiosInstance.get(TAGS_URLS.GET_TAGS)
@@ -63,7 +67,7 @@ export default function RecipesList() {
           pageSize
         }
       });
-      // console.log(response.data.data);
+      console.log(response.data.data);
       setRecipes(response?.data?.data);
       setTotalPages(response?.data?.totalNumberOfPages);
     } catch (error) {
@@ -184,7 +188,7 @@ export default function RecipesList() {
                 recipes.length > 0 ? recipes.map((recipe, index) => (
                   <tr key={index}>
                     <td>{recipe?.name}</td>
-                    <td><img src={recipe?.imagePath ? imgURL + recipe?.imagePath : staticRecipe}
+                    <td><img src={recipe?.imagePath? imgURL+recipe?.imagePath : staticRecipe}
                       alt={recipe?.name} className='recipeImg' /></td>
                     <td>{`${recipe?.price} $ `}</td>
                     <td>{recipe?.description}</td>
@@ -194,7 +198,7 @@ export default function RecipesList() {
                       <div className="dropdown">
                         <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
                         <ul className="dropdown-menu actionDropdown">
-                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
+                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={()=>{setItemToView(recipe),setShowItemDetails(true)}}><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
                           <li><Link to={`/dashboard/recipes-data/${recipe?.id}`} className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-edit greenMain mx-2"></i>Edit</Link></li>
                           <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(recipe?.id, recipe?.name)}><i className="fa fa-trash greenMain mx-2"></i>Delete</a></li>
                         </ul>
@@ -215,6 +219,7 @@ export default function RecipesList() {
           onConfirm={handleConfirmDelete}
           message={`Delete This recipe ${itemToDeleteName} ?`}
         />
+        <ItemDetails recipe={itemToView} show={showITemDetails} onClose={() => setShowItemDetails(false)} />
       </div>
     </>
   )

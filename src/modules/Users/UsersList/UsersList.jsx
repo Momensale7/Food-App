@@ -10,6 +10,7 @@ import DeleteConfirmation from "../../Shared/DeleteConfirmation/DeleteConfirmati
 import Pagination from "../../Shared/Pagination/Pagination";
 import { privateAxiosInstance } from "../../services/api/apiInstance";
 import { imgURL, USER_URLS } from "../../services/api/apiConfig";
+import ItemDetails from "../../Shared/itemDetails/itemDetails";
 
 export default function UsersList() {
   const [users, setUsers] = useState([]);
@@ -23,6 +24,8 @@ export default function UsersList() {
   const [country, setCountry] = useState(null);
   const [email, setEmail] = useState(null);
   const [groups, setGroups] = useState(null);
+  const [showITemDetails, setShowItemDetails] = useState(false)
+  const [itemToView, setItemToView] = useState(null)
 
 
   const [isLoading, setIsLoading] = useState()
@@ -125,20 +128,20 @@ export default function UsersList() {
       <div className="categories container ">
         <div className="row gx-2 gy-2">
           <div className="col-6 col-lg-3">
-          <input type="search" className='form-control' placeholder='Enter user name' onInput={handleuserNameValue} />
+            <input type="search" className='form-control' placeholder='Enter user name' onInput={handleuserNameValue} />
           </div>
           <div className="col-6 col-lg-3">
-          <input type="search" className='form-control' placeholder='Enter country name' onInput={handleCountryValue} />
+            <input type="search" className='form-control' placeholder='Enter country name' onInput={handleCountryValue} />
           </div>
           <div className="col-6 col-lg-3">
-          <input type="search" className='form-control' placeholder='Enter email' onInput={handleEmailValue} />
+            <input type="search" className='form-control' placeholder='Enter email' onInput={handleEmailValue} />
           </div>
           <div className="col-6 col-lg-3">
-          <select name="" id="" onChange={handleGroupsValue} className='form-control'>
-            <option value="">Select group</option>
-            <option value="1">admin</option>
-            <option value="2">user</option>
-          </select>
+            <select name="" id="" onChange={handleGroupsValue} className='form-control'>
+              <option value="">Select group</option>
+              <option value="1">admin</option>
+              <option value="2">user</option>
+            </select>
           </div>
 
         </div>
@@ -170,7 +173,7 @@ export default function UsersList() {
                       <div className="dropdown">
                         <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
                         <ul className="dropdown-menu actionDropdown">
-                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
+                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => { setItemToView(user), setShowItemDetails(true) }}><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
                           <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-edit greenMain mx-2"></i>Edit</a></li>
                           <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(user?.id, user?.userName)}><i className="fa fa-trash greenMain mx-2"></i>Delete</a></li>
                         </ul>
@@ -189,6 +192,8 @@ export default function UsersList() {
           onConfirm={handleConfirmDelete}
           message={`Delete This user ${itemToDeleteName} ?`}
         />
+        <ItemDetails user={itemToView} show={showITemDetails} onClose={() => setShowItemDetails(false)} />
+
       </div>
     </>
   )

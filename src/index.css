@@ -214,3 +214,9 @@ html, body {
 .customBorder {
   border: 1px dashed rgba(0, 146, 71, 1)  !important;
 }
+
+.modalImg{
+  width: 242px;
+  height: 168px;
+  border-radius: 8px;
+}

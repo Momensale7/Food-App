@@ -10,6 +10,7 @@ import CategoriesData from '../CategoriesData/CategoriesData';
 import Pagination from '../../Shared/Pagination/Pagination';
 import { privateAxiosInstance } from '../../services/api/apiInstance';
 import { CATEGORIES_URLS } from '../../services/api/apiConfig';
+import ItemDetails from '../../Shared/itemDetails/itemDetails';
 
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
@@ -24,6 +25,8 @@ export default function CategoriesList() {
   const [itemToUpdateId, setItemToUpdateId] = useState(null);
   const [isloading, setIsLoading] = useState(false);
   const [name, setName] = useState(null)
+  const [showITemDetails, setShowItemDetails] = useState(false)
+  const [itemToView, setItemToView] = useState(null)
 
   const getCategories = async () => {
     setIsLoading(true);
@@ -46,14 +49,14 @@ export default function CategoriesList() {
   useEffect(() => {
     getCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name,pageNumber]);
+  }, [name, pageNumber]);
 
   const handlePageChange = (newPageNumber) => {
     if (newPageNumber > 0 && newPageNumber <= totalPages) {
       setPageNumber(newPageNumber);
     }
   };
-  const handleDeleteClick = (itemId,itemToDeleteName) => {
+  const handleDeleteClick = (itemId, itemToDeleteName) => {
     setItemToDeleteName(itemToDeleteName)
     setItemToDelete(itemId);
     setShowModal(true);
@@ -95,7 +98,7 @@ export default function CategoriesList() {
     }
     setShowModal(false);
   };
-  const handleNameValue=(e)=>{
+  const handleNameValue = (e) => {
     setName(e.target.value)
     setPageNumber(1)
   }
@@ -114,7 +117,7 @@ export default function CategoriesList() {
       />
       <div className="categories container ">
 
-      <input type="search" className='form-control' placeholder='Enter category name' onInput={handleNameValue} />
+        <input type="search" className='form-control' placeholder='Enter category name' onInput={handleNameValue} />
 
         <div className="table-responsive pt-4">
           <table className="table min-w-1000">
@@ -146,9 +149,9 @@ export default function CategoriesList() {
                       <div className="dropdown">
                         <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
                         <ul className="dropdown-menu actionDropdown " >
-                          <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" ><i className="fa fa-eye greenMain mx-2"></i>view</a></li>
-                          <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={() => handleUpdateClick(category?.id, category?.name)} ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
-                          <li><a className="dropdown- fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(category?.id , category?.name)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
+                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => { setItemToView(category), setShowItemDetails(true) }}><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
+                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleUpdateClick(category?.id, category?.name)} ><i className="fa fa-edit greenMain mx-2"></i>edit</a></li>
+                          <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(category?.id, category?.name)} ><i className="fa fa-trash greenMain mx-2"></i>delete</a></li>
                         </ul>
                       </div>
                     </td>
@@ -172,6 +175,9 @@ export default function CategoriesList() {
           categoryId={itemToUpdateId}
           getCategories={getCategories}
           categoryName={itemToUpdateName} />
+
+        <ItemDetails category={itemToView} show={showITemDetails} onClose={() => setShowItemDetails(false)} />
+
 
       </div>
     </>
