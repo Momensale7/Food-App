@@ -10,6 +10,7 @@ export const USER_URLS={
     RESET_PASS:`/Users/Reset`,
     CHANGE_PASS:`/Users/ChangePassword`,
     GET_USERS:`/Users`,
+    VERIFY:`/Users/Verify`,
     DELETE_USER:(id)=>`/Users/${id}`,
     GET_USER:(id)=>`/Users/USER/${id}`
 }

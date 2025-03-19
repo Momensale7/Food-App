@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo_1.png";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -8,7 +8,8 @@ import { puplicAxiosInstance } from "../../services/api/apiInstance";
 import { USER_URLS } from "../../services/api/apiConfig";
 // eslint-disable-next-line react/prop-types
 export default function Login({ saveLoginData }) {
-  let { register, formState: { errors,isSubmitting }, handleSubmit } = useForm()
+  const { state } = useLocation()
+  let { register, formState: { errors,isSubmitting }, handleSubmit } = useForm({defaultValues: { email:state?.email }}, { mood: "onChange" });
   let navigate = useNavigate()
   const onSubmit = async (data) => {
     try {

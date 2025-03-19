@@ -10,6 +10,7 @@ import { REQUIRED_VALIDATION } from '../../services/validation/validation'
 import { privateAxiosInstance, puplicAxiosInstance } from '../../services/api/apiInstance'
 import { CATEGORIES_URLS, TAGS_URLS, RECIPES_URLS } from '../../services/api/apiConfig'
 import { useDropzone } from 'react-dropzone'
+import Loading from '../../Shared/Loading/Loading'
 
 export default function RecipesData() {
   const {
@@ -21,13 +22,14 @@ export default function RecipesData() {
     accept: { 'image/*': [] },
     multiple: false,
     onDrop: (files) => {
-      setValue('recipeImage', files[0], { shouldValidate: true });  // Set file in react-hook-form
+      setValue('recipeImage', files[0], { shouldValidate: true });  
     }
   });
   let { register, formState: { errors, isSubmitting }, handleSubmit, reset, setValue } = useForm()
   const [tags, setTags] = useState([])
   const [categories, setCategories] = useState([])
   const navigate = useNavigate()
+  const [isLoading,setIsLoading]=useState(false)
   const params = useParams()
   const recipeId = params.recipeId
 
@@ -40,7 +42,7 @@ export default function RecipesData() {
             formData.append('recipeImage', data.recipeImage[0])
           }
         }
-        else formData.append(key, data[key]) // FIXED
+        else formData.append(key, data[key]) 
       }
       console.log(formData);
 
@@ -49,7 +51,7 @@ export default function RecipesData() {
         : await privateAxiosInstance.post(RECIPES_URLS.ADD_RECIPE, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
 
       // Handle successful response
-      toast.success('Recipe added successfully!', {
+      toast.success(response?.data?.message || recipeId?'Recipe updated successfully!':'Recipe added successfully!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -64,7 +66,7 @@ export default function RecipesData() {
 
     } catch (error) {
       console.error('Error adding recipe:', error)
-      toast.error(error.response?.data?.message || 'Failed to add recipe', {
+      toast.error(error.response?.data?.message || recipeId?'faild to update recipe' :'Failed to add recipe', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -100,10 +102,10 @@ export default function RecipesData() {
 
   useEffect(() => {
     (async () => {
-
+setIsLoading(true)
       await getCategories()
       await getTags()
-
+setIsLoading(false)
       if (recipeId) {
         const getRecipe = async () => {
           const response = await privateAxiosInstance.get(RECIPES_URLS.GET_RECIPE(recipeId));
@@ -129,9 +131,9 @@ export default function RecipesData() {
         btnContent={"All Recipes"}
         routeTo={"/dashboard/recipes"} />
       <div className="container">
-        <div className="text-muted mt-3 fs-3">{recipeId ? "Edit item" : "Add new item"}</div>
+        <div className="text-muted mt-3 fs-6 px-3">{recipeId ? "Edit item" : "Add new item"}</div>
         <div className="px-5 mt-5">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {isLoading && recipeId?<Loading/>:<form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-group mb-3">
               <input {...register('name', REQUIRED_VALIDATION("name"))}
                 type="text" className="form-control bg-light border-0 " placeholder="recipe name" aria-label="email" aria-describedby="basic-addon1" />
@@ -203,7 +205,7 @@ export default function RecipesData() {
                 {isSubmitting ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : "save"}
               </button>
             </div>
-          </form>
+          </form>}
         </div>
       </div>
     </>
