@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { privateAxiosInstance } from '../services/api/apiInstance';
 import { CATEGORIES_URLS, RECIPES_URLS, USER_URLS } from '../services/api/apiConfig';
-import { getLoginData } from '../../services/utility/utilities';;
+import { getLoginData } from '../../services/utility/utilities'
 
 export default function Overview() {
      const [admin, setAdmin] = useState(0);

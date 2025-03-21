@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import Header from '../Shared/Header/Header'
 import veganImg from '../../assets/images/vegan.png'
 import RecipeHeader from '../Shared/RecipeHeader/RecipeHeader'
-import { getLoginData } from '../../services/utility/utilities';
+import { getLoginData } from '../../services/utility/utilities'
+
 import Overview from '../Overview/Overview'
 
 export default function Dashboard() {
