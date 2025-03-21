@@ -10,7 +10,7 @@ import DeleteConfirmation from "../../Shared/DeleteConfirmation/DeleteConfirmati
 import Pagination from "../../Shared/Pagination/Pagination";
 import { privateAxiosInstance } from "../../services/api/apiInstance";
 import { imgURL, USER_URLS } from "../../services/api/apiConfig";
-import ItemDetails from "../../Shared/itemDetails/itemDetails";
+import ItemDetails from "../../Shared/itemDetails/ItemDetails";
 
 export default function UsersList() {
   const [users, setUsers] = useState([]);
