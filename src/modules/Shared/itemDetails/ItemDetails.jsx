@@ -4,7 +4,7 @@ import staticImg from '../../../assets/images/staticUser.jpg';
 import staticRecipe from '../../../assets/images/recipe.jpg';
 import { privateAxiosInstance } from '../../services/api/apiInstance';
 import { toast } from 'react-toastify';
-import { getLoginData } from '../../services/utilit/utilities ';
+import { getLoginData } from '../../services/utility/utilities';
 
 export default function ItemDetails({ onClose, show, recipe, category, user }) {
   const loginData = getLoginData();

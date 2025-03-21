@@ -13,7 +13,7 @@ import { privateAxiosInstance, puplicAxiosInstance } from '../../services/api/ap
 import { CATEGORIES_URLS, imgURL, RECIPES_URLS, TAGS_URLS } from '../../services/api/apiConfig';
 import { Link } from 'react-router-dom';
 import ItemDetails from "../../Shared/itemDetails/ItemDetails";
-import { getLoginData } from '../../services/utilit/utilities ';
+import { getLoginData } from '../../services/utility/utilities';
 
 export default function RecipesList() {
   const [recipes, setRecipes] = useState([]);

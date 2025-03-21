@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import CategoriesData from '../../Categories/CategoriesData/CategoriesData'
 import { Link } from 'react-router-dom';
-import { getLoginData } from '../../services/utilit/utilities ';
+import { getLoginData } from '../../services/utility/utilities';
 
 export default function SubHeader({ title, description, btnContent, getCategories,routeTo }) {
   const [showModal, setShowModal] = useState(false);
