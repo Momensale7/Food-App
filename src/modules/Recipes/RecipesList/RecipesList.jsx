@@ -12,7 +12,7 @@ import Pagination from '../../Shared/Pagination/Pagination';
 import { privateAxiosInstance, puplicAxiosInstance } from '../../services/api/apiInstance';
 import { CATEGORIES_URLS, imgURL, RECIPES_URLS, TAGS_URLS } from '../../services/api/apiConfig';
 import { Link } from 'react-router-dom';
-import ItemDetails from '../../Shared/itemDetails/itemDetails';
+import ItemDetails from "../../Shared/itemDetails/ItemDetails";
 import { getLoginData } from '../../services/utilit/utilities ';
 
 export default function RecipesList() {

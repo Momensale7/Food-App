@@ -10,7 +10,7 @@ import CategoriesData from '../CategoriesData/CategoriesData';
 import Pagination from '../../Shared/Pagination/Pagination';
 import { privateAxiosInstance } from '../../services/api/apiInstance';
 import { CATEGORIES_URLS } from '../../services/api/apiConfig';
-import ItemDetails from '../../Shared/itemDetails/itemDetails';
+import ItemDetails from "../../Shared/itemDetails/ItemDetails";
 
 export default function CategoriesList() {
   const [categories, setCategories] = useState([]);
