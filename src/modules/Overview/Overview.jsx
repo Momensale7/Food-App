@@ -79,7 +79,7 @@ export default function Overview() {
   return (
     <>
       {loginData?.userGroup !== "SystemUser" &&
-        <div className="container-fluid py-4">
+        <div className="container py-4">
           <h2 className="fw-bold mb-4">Dashboard Overview</h2>
           <div className="row g-4">
             {/* Admin Card */}
