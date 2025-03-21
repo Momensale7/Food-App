@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import avatar from '../../../assets/images/avatar.jpg'
 import { jwtDecode } from 'jwt-decode';
-import { getLoginData } from '../../services/utilit/utilities ';
+import { getLoginData } from '../../services/utility/utilities';
 import { baseURL } from '../../services/api/apiConfig';
 export default function Navbar() {
   const loginData = getLoginData();

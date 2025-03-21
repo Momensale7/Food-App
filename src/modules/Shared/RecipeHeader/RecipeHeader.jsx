@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getLoginData } from '../../services/utilit/utilities ';
+import { getLoginData } from '../../services/utility/utilities';
 
 export default function RecipeHeader({title, description, btnContent,routeTo,SubDescription }) {
   const loginData = getLoginData();

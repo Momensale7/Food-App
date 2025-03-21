@@ -4,8 +4,7 @@ import { Menu, MenuItem, Sidebar, SubMenu } from 'react-pro-sidebar'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import sideBarLogo from '../../../assets/images/sideLogo.png'
 import ChangePass from '../../Authentication/Change-pass/Change-pass'
-import { jwtDecode } from 'jwt-decode'
-import { getLoginData } from '../../services/utilit/utilities '
+import { getLoginData } from '../../services/utility/utilities'
 
 export default function SideBar({collapsed,setCollapsed}) {
   const [showchangePass, setShowChangePass] = useState(false)
