@@ -25,33 +25,13 @@ export default function ChangePass({ onClose, show }) {
     try {
       const response = await privateAxiosInstance.put(USER_URLS.CHANGE_PASS, data);
       console.log(response);
-      toast.success(response?.data?.message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success(response?.data?.message, );
       reset();
       onClose();
 
     } catch (error) {
       console.log(error);
-      toast.error(`${error?.response?.data?.message || "error on changing Pass"}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(`${error?.response?.data?.message || "error on changing Pass"}`, );
     }
   };
 

@@ -7,7 +7,7 @@ import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from "../../services/validation
 import { puplicAxiosInstance } from "../../services/api/apiInstance";
 import { USER_URLS } from "../../services/api/apiConfig";
 // eslint-disable-next-line react/prop-types
-export default function Login({ saveLoginData }) {
+export default function Login() {
   const { state } = useLocation()
   let { register, formState: { errors,isSubmitting }, handleSubmit } = useForm({defaultValues: { email:state?.email }}, { mood: "onChange" });
   let navigate = useNavigate()
@@ -15,33 +15,12 @@ export default function Login({ saveLoginData }) {
     try {
       let response = await puplicAxiosInstance.post(USER_URLS.LOGIN, data)
       // console.log(response);
-      toast.success('logged in successfully', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success('logged in successfully', );
       localStorage.setItem('token', response?.data?.token)
-      saveLoginData()
       navigate('/dashboard');
     } catch (error) {
       // console.log(error);
-      toast.error(`${error?.response?.data?.message}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(`${error?.response?.data?.message}`, );
 
     }
   }

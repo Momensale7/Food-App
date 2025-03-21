@@ -70,30 +70,10 @@ export default function UsersList() {
     console.log('Deleting item with ID:', itemToDelete);
     try {
       let response = await privateAxiosInstance.delete(USER_URLS.DELETE_USER(itemToDelete),);
-      toast.success(response?.data?.message || 'item deleted successfully', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success(response?.data?.message || 'item deleted successfully', );
       getUsers();
     } catch (error) {
-      toast.error(`${error?.response?.data?.message}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(`${error?.response?.data?.message}`, );
       // console.error('Error deleting recipe:', error);
     }
     setShowModal(false);

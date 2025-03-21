@@ -4,10 +4,13 @@ import { Menu, MenuItem, Sidebar, SubMenu } from 'react-pro-sidebar'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import sideBarLogo from '../../../assets/images/sideLogo.png'
 import ChangePass from '../../Authentication/Change-pass/Change-pass'
+import { jwtDecode } from 'jwt-decode'
+import { getLoginData } from '../../services/utilit/utilities '
 
 export default function SideBar({collapsed,setCollapsed}) {
   const [showchangePass, setShowChangePass] = useState(false)
-
+const loginData = getLoginData();
+   
   let navigate = useNavigate()
   const toggleCollapse = () => {
     setCollapsed(!collapsed)
@@ -16,12 +19,28 @@ export default function SideBar({collapsed,setCollapsed}) {
     localStorage.removeItem('token')
     navigate('/login')
   }
-  const menuItems = [
+  let menuItems = [
     { to: "/dashboard", icon: "fa-home", label: "Home" },
-    { to: "users", icon: "fa-users", label: "Users" },
+    { to: "users", icon: "fa-users", label: "Users", hideFor: ["SystemUser"] },
     { to: "recipes", icon: "fa-utensils", label: "Recipes" },
-    { to: "categories", icon: "fa-list", label: "Categories" },
-  ]
+    { to: "categories", icon: "fa-list", label: "Categories", hideFor: ["SystemUser"] },
+    { to: "favs", icon: "fa-heart", label: "Favourites", showOnlyFor: ["SystemUser"] }
+  ];
+  
+  const getFilteredMenuItems = (userGroup) => {
+    return menuItems.filter(item => {
+      if (item.hideFor && item.hideFor.includes(userGroup)) {
+        return false;
+      }
+      if (item.showOnlyFor && !item.showOnlyFor.includes(userGroup)) {
+        return false;
+      }
+      
+      return true;
+    });
+  };
+  
+   menuItems = getFilteredMenuItems(loginData?.userGroup);
   
   return (
     <>

@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useState } from 'react'
 import avatar from '../../../assets/images/avatar.jpg'
-export default function Navbar({loginData}) {
-  console.log(loginData);
-  
+import { jwtDecode } from 'jwt-decode';
+import { getLoginData } from '../../services/utilit/utilities ';
+import { baseURL } from '../../services/api/apiConfig';
+export default function Navbar() {
+  const loginData = getLoginData();
+
   return (
     <div className="container pt-3">
     <nav className="navbar navbar-expand-lg bg-body-tertiary mt-2 border-0 p-0 rounded-2">
@@ -14,7 +17,7 @@ export default function Navbar({loginData}) {
     <div className="collapse navbar-collapse" id="navbarNavDropdown">
       <ul className="navbar-nav ms-auto  text-dark-main">
         <li className="nav-item d-flex align-items-center">
-          <img src={avatar} alt="Profile" className="profile-image ms-1" />
+          <img src={loginData?.imagePath?baseURL+loginData?.imagePath:avatar} alt="Profile" className="profile-image ms-1" />
           <a className="nav-link fs-12 text-dark-main" aria-current="page" href="#">{loginData?.userName}</a>
         </li>
         <li className="nav-item dropdown">

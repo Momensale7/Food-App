@@ -14,74 +14,58 @@ import CategoriesData from './modules/Categories/CategoriesData/CategoriesData'
 import UsersList from './modules/Users/UsersList/UsersList'
 import { Bounce, ToastContainer } from 'react-toastify'
 import VerifyAccount from './modules/Authentication/Verify-account/VerifyAccount'
-import { jwtDecode } from 'jwt-decode'
 import { useEffect, useState } from 'react'
 import ProtectedRoute from './modules/Shared/ProtectedRoute/ProtectedRoute'
+import Favourites from './modules/Favourites/Favourites'
 
 function App() {
-  const [loginData, setLoginData] = useState(() => {
-    let token = localStorage.getItem("token");
-    return token ? jwtDecode(token) : null;
-  });
-  let saveLoginData= () => {
-    let encodedToken = localStorage.getItem("token");
-    if (encodedToken) {
-      let decodedToken = jwtDecode(encodedToken);
-      setLoginData(decodedToken);
-    }
-  }
-  
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
-      saveLoginData();
-    } 
-  },[])
   const routes = createBrowserRouter(
     [
       {
-        path:"",
-        element:<AuthLayout/>,
-        errorElement:<NotFound/>,
-        children:[
-          {index:true,element:<Login saveLoginData={saveLoginData}/>},
-          {path:"login",element:<Login saveLoginData={saveLoginData}/>},
-          {path:"register",element:<Register/>},
-          {path:"reset-password",element:<ResetPass/>},
-          {path:"verify-account",element:<VerifyAccount/>},
+        path: "",
+        element: <AuthLayout />,
+        errorElement: <NotFound />,
+        children: [
+          { index: true, element: <Login /> },
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+          { path: "reset-password", element: <ResetPass /> },
+          { path: "verify-account", element: <VerifyAccount /> },
         ]
       },
       {
-        path:"/dashboard",
-        element:<ProtectedRoute loginData={loginData}><MasterLayout loginData={loginData}/></ProtectedRoute>,
-        errorElement:<NotFound/>,
-        children:[
-          {index:true,element:<Dashboard loginData={loginData} />},
-          {path:"recipes",element:<RecipesList/>},
-          {path:"recipes-data/new-recipe",element:<RecipesData/>},
-          {path:"recipes-data/:recipeId",element:<RecipesData/>},
-          {path:"categories",element:<CategoriesList/>},
-          {path:"category",element:<CategoriesData/>},
-          {path:"users",element:<UsersList/>},
+        path: "/dashboard",
+        element: <ProtectedRoute ><MasterLayout  /></ProtectedRoute>,
+        errorElement: <NotFound />,
+        children: [
+          { index: true, element: <Dashboard  /> },
+          { path: "recipes", element: <RecipesList  /> },
+          { path: "recipes-data/new-recipe", element: <RecipesData /> },
+          { path: "recipes-data/:recipeId", element: <RecipesData /> },
+          { path: "categories", element: <CategoriesList /> },
+          { path: "category", element: <CategoriesData /> },
+          { path: "users", element: <UsersList /> },
+          { path: "favs", element: <Favourites /> },
         ]
       }
     ]
   )
   return (
     <>
-  <RouterProvider router={routes}></RouterProvider>
-  <ToastContainer
-position="top-center"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick={false}
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-transition={Bounce}
-/>
+      <RouterProvider router={routes}></RouterProvider>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   )
 }

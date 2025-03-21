@@ -15,32 +15,12 @@ export default function CategoriesData({ show, onClose, categoryId, categoryName
       const response = type === "update"
         ? await privateAxiosInstance.put(CATEGORIES_URLS.UPDATE_CATEGORY(categoryId), data)
         : await puplicAxiosInstance.post(CATEGORIES_URLS.POST_CATEGORY, data);
-      toast.success(response?.data?.message || (type==="add"?"category added successfully":"category updated successfully"), {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success(response?.data?.message || (type==="add"?"category added successfully":"category updated successfully"), );
       getCategories()
       onClose();
     } catch (error) {
       console.log(error);
-      toast.error(`${error?.response?.data?.message || "faild to process"}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(`${error?.response?.data?.message || "faild to process"}`, );
 
     }
   }

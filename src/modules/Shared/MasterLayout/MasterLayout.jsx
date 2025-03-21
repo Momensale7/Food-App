@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import SideBar from '../Sidebar/Sidebar';
 
-export default function MasterLayout({ loginData }) {
+export default function MasterLayout() {
   const [collapsed, setCollapsed] = useState(window.innerWidth <= 900); 
 
   return (
@@ -14,7 +14,7 @@ export default function MasterLayout({ loginData }) {
       
       {/* Adjust mainContent margin dynamically */}
       <div className={`mainContent ${collapsed ? 'collapsed' : ''}`}>
-        <Navbar loginData={loginData} />
+        <Navbar />
         <Outlet />
       </div>
     </div>

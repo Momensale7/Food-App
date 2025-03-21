@@ -30,3 +30,8 @@ export const CATEGORIES_URLS={
 export const TAGS_URLS={
     GET_TAGS:`/tag`,
 }
+export const FAVOURITES_URLS = {
+    GET_FAVOURITES:`/userRecipe`,
+    ADD_FAVOURITE:`/userRecipe`,
+    DELETE_FAVOURITE:(id)=>`/userRecipe/${id}`
+}

@@ -13,6 +13,7 @@ import { privateAxiosInstance, puplicAxiosInstance } from '../../services/api/ap
 import { CATEGORIES_URLS, imgURL, RECIPES_URLS, TAGS_URLS } from '../../services/api/apiConfig';
 import { Link } from 'react-router-dom';
 import ItemDetails from '../../Shared/itemDetails/itemDetails';
+import { getLoginData } from '../../services/utilit/utilities ';
 
 export default function RecipesList() {
   const [recipes, setRecipes] = useState([]);
@@ -30,6 +31,9 @@ export default function RecipesList() {
   const [categories, setCategories] = useState([])
   const [showITemDetails, setShowItemDetails] = useState(false)
   const [itemToView, setItemToView] = useState(null)
+  const loginData = getLoginData();
+
+  
 
   const getTags = async () => {
     try {
@@ -47,7 +51,7 @@ export default function RecipesList() {
       let response = await privateAxiosInstance.get(CATEGORIES_URLS.GET_CATEGORIES,{
         params:{pageSize:10}
       })
-      console.log(response);
+      // console.log(response);
       setCategories(response?.data?.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -67,7 +71,7 @@ export default function RecipesList() {
           pageSize
         }
       });
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setRecipes(response?.data?.data);
       setTotalPages(response?.data?.totalNumberOfPages);
     } catch (error) {
@@ -77,11 +81,11 @@ export default function RecipesList() {
   };
   const handleTagValue=(e)=>{
     setTagId(e.target.value)
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setPageNumber(1)
   }
   const handleCategoryValue=(e)=>{
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setCategoryId(e.target.value)
     setPageNumber(1)
   }
@@ -108,33 +112,13 @@ export default function RecipesList() {
     setShowModal(true);
   };
   const handleConfirmDelete = async () => {
-    console.log('Deleting item with ID:', itemToDelete);
+    // console.log('Deleting item with ID:', itemToDelete);
     try {
       let response = await privateAxiosInstance.delete(RECIPES_URLS.DELETE_RECIPE(itemToDelete),);
-      toast.success('item deleted successfully', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success('item deleted successfully', );
       getRecipes();
     } catch (error) {
-      toast.error(`${error?.response?.data?.message}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(`${error?.response?.data?.message}`, );
       // console.error('Error deleting recipe:', error);
     }
     setShowModal(false);
@@ -199,8 +183,10 @@ export default function RecipesList() {
                         <i className="fa fa-ellipsis-h" data-bs-toggle="dropdown" aria-expanded="false"></i>
                         <ul className="dropdown-menu actionDropdown">
                           <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={()=>{setItemToView(recipe),setShowItemDetails(true)}}><i className="fa fa-eye greenMain mx-2"></i>View</a></li>
+                          {loginData?.userGroup !== "SystemUser" && <>
                           <li><Link to={`/dashboard/recipes-data/${recipe?.id}`} className="dropdown-item fs-12 text-dark-main text-decoration-none"><i className="fa fa-edit greenMain mx-2"></i>Edit</Link></li>
                           <li><a className="dropdown-item fs-12 text-dark-main text-decoration-none" onClick={() => handleDeleteClick(recipe?.id, recipe?.name)}><i className="fa fa-trash greenMain mx-2"></i>Delete</a></li>
+                          </>}
                         </ul>
                       </div>
                     </td>

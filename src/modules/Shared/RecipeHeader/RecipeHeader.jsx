@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getLoginData } from '../../services/utilit/utilities ';
 
 export default function RecipeHeader({title, description, btnContent,routeTo,SubDescription }) {
+  const loginData = getLoginData();
+
   return (
     <div className="mt-3 container ">
     <div className=" recipeHeader d-flex align-items-center justify-content-between px-5 py-4 rounded-3">
@@ -10,7 +13,9 @@ export default function RecipeHeader({title, description, btnContent,routeTo,Sub
         <p className='fs-12 mt-0 mb-0 pb-0'>{description}</p>
         <p className='fs-12 mt-0 mb-0 pb-0'>{SubDescription}</p>
       </div>
-      <Link to={routeTo} className='btn greenMainBg px-3 fs-6 fw-bold py-1 text-white'>{btnContent} <i className="fa fa-arrow-right ms-2"></i></Link>
+      {
+        loginData?.userGroup !== "SystemUser" && <Link to={routeTo} className='btn greenMainBg px-3 fs-6 fw-bold py-1 text-white'>{btnContent} <i className="fa fa-arrow-right ms-2"></i></Link>
+      }
     </div>
   </div>
   )

@@ -18,31 +18,11 @@ export default function VerifyAccount() {
     try {
       const response = await puplicAxiosInstance.put(USER_URLS.VERIFY, data);
       // console.log(response);
-      toast.success(response?.data?.message || "Account veified successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success(response?.data?.message || "Account veified successfully", );
       navigate('/login', { state: { email: data.email } });
     } catch (error) {
       // console.log(error);
-      toast.error(`${error?.response?.data?.message ||"somthing went wrong"}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(`${error?.response?.data?.message ||"somthing went wrong"}`, );
     }
   };
 

@@ -13,32 +13,12 @@ export default function ForgetPass() {
     try {
       let response = await puplicAxiosInstance.post(USER_URLS.FORGET_PASS, data)
       // console.log(response);
-      toast.success(response?.data?.message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success(response?.data?.message, );
       navigate('/reset-password',{state:{email:data.email}});
 
     } catch (error) {
       // console.log(error);
-      toast.error(`${error?.response?.data?.message}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(`${error?.response?.data?.message}`, );
 
     }
   }
