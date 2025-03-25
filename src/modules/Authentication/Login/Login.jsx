@@ -9,7 +9,7 @@ import { USER_URLS } from "../../services/api/apiConfig";
 // eslint-disable-next-line react/prop-types
 export default function Login() {
   const { state } = useLocation()
-  let { register, formState: { errors,isSubmitting }, handleSubmit } = useForm({defaultValues: { email:state?.email }}, { mood: "onChange" });
+  let { register, formState: { errors,isSubmitting }, handleSubmit } = useForm({defaultValues: { email:state?.email }}, { mode: "onChange" });
   let navigate = useNavigate()
   const onSubmit = async (data) => {
     try {
