@@ -97,16 +97,16 @@ export default function Overview() {
                     <>
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
-                          <p className="text-muted small">Total admin</p>
-                          <h3 className="fw-bold text-primary">{admin}</h3>
+                          <p className="fw-bold small text-dark-main">Total admin</p>
+                          <h3 className="fw-bold greenMain">{admin}</h3>
                         </div>
-                        <div className="bg-primary bg-opacity-10 p-3 rounded-circle">
-                          <i className="fas fa-chart-bar text-primary fs-4"></i>
+                        <div className="bg-opacity-10 p-3 rounded-circle" style={{backgroundColor: 'rgba(0, 146, 71, 0.1)'}}>
+                          <i className="fas fa-chart-bar greenMain fs-4"></i>
                         </div>
                       </div>
                       <div className="mt-3">
                         <div className="progress stat-progress">
-                          <div className="progress-bar bg-primary" role="progressbar"
+                          <div className="progress-bar greenMainBg" role="progressbar"
                             style={{ width: `${(admin / 800) * 100}%` }}
                             aria-valuenow={admin}
                             aria-valuemin="0"
@@ -134,16 +134,16 @@ export default function Overview() {
                     <>
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
-                          <p className="text-muted small">Total Users</p>
-                          <h3 className="fw-bold text-success">{user}</h3>
+                          <p className="fw-bold small text-dark-main">Total Users</p>
+                          <h3 className="fw-bold greenMain">{user}</h3>
                         </div>
-                        <div className="bg-success bg-opacity-10 p-3 rounded-circle">
-                          <i className="fas fa-users text-success fs-4"></i>
+                        <div className="bg-opacity-10 p-3 rounded-circle" style={{backgroundColor: 'rgba(0, 146, 71, 0.1)'}}>
+                          <i className="fas fa-users greenMain fs-4"></i>
                         </div>
                       </div>
                       <div className="mt-3">
                         <div className="progress stat-progress">
-                          <div className="progress-bar bg-success" role="progressbar"
+                          <div className="progress-bar greenMainBg" role="progressbar"
                             style={{ width: `${(user / 800) * 100}%` }}
                             aria-valuenow={user}
                             aria-valuemin="0"
@@ -171,16 +171,16 @@ export default function Overview() {
                     <>
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
-                          <p className="text-muted small">Total Categories</p>
-                          <h3 className="fw-bold text-warning">{category}</h3>
+                          <p className="fw-bold small text-dark-main">Total Categories</p>
+                          <h3 className="fw-bold greenMain">{category}</h3>
                         </div>
-                        <div className="bg-warning bg-opacity-10 p-3 rounded-circle">
-                          <i className="fas fa-book-open text-warning fs-4"></i>
+                        <div className="bg-opacity-10 p-3 rounded-circle" style={{backgroundColor: 'rgba(0, 146, 71, 0.1)'}}>
+                          <i className="fas fa-book-open greenMain fs-4"></i>
                         </div>
                       </div>
                       <div className="mt-3">
                         <div className="progress stat-progress">
-                          <div className="progress-bar bg-warning" role="progressbar"
+                          <div className="progress-bar greenMainBg" role="progressbar"
                             style={{ width: `${(category / 100) * 100}%` }}
                             aria-valuenow={category}
                             aria-valuemin="0"
@@ -208,16 +208,16 @@ export default function Overview() {
                     <>
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
-                          <p className="text-muted small">Total Recipes</p>
-                          <h3 className="fw-bold text-danger">{recipe}</h3>
+                          <p className="fw-bold small text-dark-main">Total Recipes</p>
+                          <h3 className="fw-bold greenMain">{recipe}</h3>
                         </div>
-                        <div className="bg-danger bg-opacity-10 p-3 rounded-circle">
-                          <i className="fas fa-utensils text-danger fs-4"></i>
+                        <div className="bg-opacity-10 p-3 rounded-circle" style={{backgroundColor: 'rgba(0, 146, 71, 0.1)'}}>
+                          <i className="fas fa-utensils greenMain fs-4"></i>
                         </div>
                       </div>
                       <div className="mt-3">
                         <div className="progress stat-progress">
-                          <div className="progress-bar bg-danger" role="progressbar"
+                          <div className="progress-bar greenMainBg" role="progressbar"
                             style={{ width: `${(recipe / 100) * 100}%` }}
                             aria-valuenow={recipe}
                             aria-valuemin="0"

@@ -24,7 +24,7 @@ export default function Favourites() {
   const [categoryId, setCategoryId] = useState(null);
   const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [view, setView] = useState('card'); // State to manage the current view
+  const [view, setView] = useState('card');
 
   const getTags = async () => {
     try {
@@ -150,7 +150,7 @@ export default function Favourites() {
         </div>
         <div className=" pe-5 container d-flex justify-content-end mb-3">
           <button className="btn me-2 border" onClick={() => setView('card')}>
-          <i className={`fa-solid fa-grip-vertical ${view === 'card' ? 'greenMain' : 'text-dark-main'}`} ></i>
+            <i className={`fa-solid fa-grip-vertical ${view === 'card' ? 'greenMain' : 'text-dark-main'}`} ></i>
           </button>
           <button className="btn mx-0 border" onClick={() => setView('table')}>
             <i className={`fas fa-table ${view === 'table' ? 'greenMain' : 'text-dark-main'}`}></i>
@@ -162,25 +162,46 @@ export default function Favourites() {
               <div className="row py-3 gx-5 gy-3 container px-5">
                 {favouriteList.map(fav => (
                   <div key={fav.id} className="col-md-4">
-                    <div className="cardItem rounded-4 px-1 py-2">
-                      <div className="card-header position-relative">
-                        <div className="icon-container position-absolute bg-white d-flex align-items-center justify-content-center">
-                          <i className="fa fa-heart love-icon greenMain" onClick={() => handleDeleteClick(fav?.id, fav?.recipe?.name)}></i>
-                        </div>
+                    <div className="card border-0 h-100 shadow-lg overflow-hidden position-relative">
+                      <div className="position-relative">
                         <img
-                          src={fav.recipe.imagePath ? imgURL + fav.recipe.imagePath : staticRecipe}
-                          alt={fav.recipe.name}
-                          className="card-img-top"
+                          src={fav?.recipe?.imagePath ? imgURL + fav?.recipe?.imagePath : staticRecipe}
+                          alt={fav?.recipe?.name}
+                          className="card-img-top object-fit-cover imgCardTop"
                         />
                       </div>
-                      <div className="card-body px-1">
-                        <div className="d-flex text-dark-main justify-content-between align-items-center">
-                          <p className='fs-5 my-0 fw-bold'>{fav?.recipe?.name}</p>
-                          <p className='my-0'><span className='greenMain fw-bold'>{fav?.recipe?.price}</span> $</p>
+                      <div className="card-body p-4 position-relative">
+
+                        <div className="d-flex justify-content-between align-items-start mb-3">
+
+                          <div>
+                            <h5 className="card-title mb-1 fw-bold">{fav?.recipe?.name}</h5>
+                            <small className="text-muted">
+                              <i className="fas fa-tag me-2 greenMain"></i>
+                              {fav?.recipe?.tag?.name}
+                            </small>
+                          </div>
+                          <div className="position-relative recipe-action-icon">
+                            <i className="fa fa-heart love-icon greenMain" onClick={() => handleDeleteClick(fav?.id, fav?.recipe?.name)}></i>
+                            <span className="recipe-action-tooltip">Remove From Favourites</span>
+                          </div>
                         </div>
-                        <p className='text-dark-main my-0'><span className='fw-bold'>Description:</span> {fav?.recipe?.description}</p>
-                        <p className='text-dark-main my-0'><span className='fw-bold'>Categories:</span> {fav?.recipe?.category?.map(cat => cat?.name).join(', ')}</p>
-                        <p className='text-dark-main my-0'><span className='fw-bold'>Tag:</span> {fav?.recipe?.tag?.name}</p>
+                        <div className="position-relative description-container mb-4">
+                          <p
+                            className="card-text text-muted description-preview"
+                            title={fav?.recipe?.description}
+                          >
+                            {fav?.recipe?.description?.split(' ').slice(0, 5).join(' ')}
+                            {fav?.recipe?.description?.split(' ').length > 5 ? '...' : ''}
+                          </p>
+
+                        </div>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="badge bg-light text-dark shadow-sm">
+                            {fav?.recipe?.category?.map(category => category?.name).join(', ')}
+                          </span>
+                          <span className="badge bg-success">{`$ ${fav?.recipe?.price}`}</span>
+                        </div>
                       </div>
                     </div>
                   </div>

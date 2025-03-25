@@ -70,10 +70,10 @@ export default function UsersList() {
     console.log('Deleting item with ID:', itemToDelete);
     try {
       let response = await privateAxiosInstance.delete(USER_URLS.DELETE_USER(itemToDelete),);
-      toast.success(response?.data?.message || 'item deleted successfully', );
+      toast.success(response?.data?.message || 'item deleted successfully',);
       getUsers();
     } catch (error) {
-      toast.error(`${error?.response?.data?.message}`, );
+      toast.error(`${error?.response?.data?.message}`,);
       // console.error('Error deleting recipe:', error);
     }
     setShowModal(false);
@@ -108,22 +108,33 @@ export default function UsersList() {
       <div className="categories container ">
         <div className="row gx-2 gy-2">
           <div className="col-6 col-lg-3">
-            <input type="search" className='form-control' placeholder='Enter user name' onInput={handleuserNameValue} />
+            <div className="input-group">
+              <span className="input-group-text greenMain"><i className="fa fa-user"></i></span>
+              <input type="search" className='form-control' placeholder='Enter user name' onInput={handleuserNameValue} />
+            </div>
           </div>
           <div className="col-6 col-lg-3">
-            <input type="search" className='form-control' placeholder='Enter country name' onInput={handleCountryValue} />
+            <div className="input-group">
+              <span className="input-group-text greenMain"><i className="fa fa-globe"></i></span>
+              <input type="search" className='form-control' placeholder='Enter country name' onInput={handleCountryValue} />
+            </div>
           </div>
           <div className="col-6 col-lg-3">
-            <input type="search" className='form-control' placeholder='Enter email' onInput={handleEmailValue} />
+            <div className="input-group">
+              <span className="input-group-text greenMain"><i className="fa fa-envelope"></i></span>
+              <input type="search" className='form-control' placeholder='Enter email' onInput={handleEmailValue} />
+            </div>
           </div>
           <div className="col-6 col-lg-3">
-            <select name="" id="" onChange={handleGroupsValue} className='form-control'>
-              <option value="">Select group</option>
-              <option value="1">admin</option>
-              <option value="2">user</option>
-            </select>
+            <div className="input-group">
+              <span className="input-group-text greenMain"><i className="fa fa-users"></i></span>
+              <select name="" id="" onChange={handleGroupsValue} className='form-control'>
+                <option value="">Select group</option>
+                <option value="1">admin</option>
+                <option value="2">user</option>
+              </select>
+            </div>
           </div>
-
         </div>
         <div className="table-responsive pt-5">
           <table className="table min-w-1000">

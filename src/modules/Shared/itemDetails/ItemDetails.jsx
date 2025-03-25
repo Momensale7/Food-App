@@ -12,6 +12,21 @@ export default function ItemDetails({ onClose, show, recipe, category, user }) {
 
   const addToFavourite = async (recipeId) => {
     try {
+      const favouritesResponse = await privateAxiosInstance.get(FAVOURITES_URLS.GET_FAVOURITES, {
+        params: {
+          pageNumber: 1,
+          pageSize: 30
+        }
+      });
+  
+      const favourites = favouritesResponse?.data?.data || [];
+      const isAlreadyFavourite = favourites.some(fav => fav.recipe.id === recipeId);
+  
+      if (isAlreadyFavourite) {
+        toast.info('Recipe is already in favourites');
+        return;
+      }
+  
       const response = await privateAxiosInstance.post(FAVOURITES_URLS.ADD_FAVOURITE, { recipeId });
       console.log(response);
       toast.success(response?.data?.message || 'Recipe added to favourites successfully');
@@ -46,66 +61,70 @@ export default function ItemDetails({ onClose, show, recipe, category, user }) {
         <div className="modal-dialog mt-5 pt-5" role="document">
           <div className="modal-content">
             <div className="modal-header border-0 pb-1">
-              <p className="text-dark-main h4">{recipe ? 'Recipe Details' : category ? "Category Details" : "User Details"}</p>
+              <h5 className="fw-bold text-dark-main"><i className="fa fa-folder-open me-2"></i> {recipe ? 'Recipe Details' : category ? "Category Details" : "User Details"}</h5>
+
               <div className="closeBtn ms-auto d-flex justify-content-center align-items-center">
                 <i className="fa fa-close text-danger" onClick={onClose}></i>
               </div>
             </div>
 
             <div className="modal-body pt-0 modalText">
-              {recipe && (
-                <div className="recipeDetails text-dark-main">
-                  <div className="text-center">
-                    <img
-                      src={recipe?.imagePath ? imgURL + recipe?.imagePath : staticRecipe}
-                      alt={recipe?.name}
-                      className="modalImg"
-                    />
-                  </div>
-                  <p><span className='fw-bold text-dark-main'></span> {recipe?.name}</p>
-                  <p><span className='fw-bold text-dark-main'>Price:</span> {`${recipe?.price} $`}</p>
-                  <p><span className='fw-bold text-dark-main'>Description:</span> {recipe?.description}</p>
-                  <p><span className='fw-bold text-dark-main'>Categories:</span> {recipe?.category?.map(cat => cat?.name).join(', ')}</p>
-                  <p><span className='fw-bold text-dark-main'>Tag:</span> {recipe?.tag?.name}</p>
-                </div>
-              )}
+  {recipe && (
+    <div className="recipeDetails text-dark-main p-3 rounded-md shadow-sm bg-white">
+      <div className="text-center mb-3">
+        <img
+          src={recipe?.imagePath ? imgURL + recipe?.imagePath : staticRecipe}
+          alt={recipe?.name}
+          className="modalImg rounded shadow"
+        />
+      </div>
+      <h5 className="text-center fw-bold"><i className="fa fa-utensils me-2"></i>{recipe?.name}</h5>
+<p><i className="fa fa-dollar-sign me-2"></i><span className='fw-bold'>Price:</span> {`${recipe?.price} $`}</p>
+<p><i className="fa fa-info-circle me-2"></i><span className='fw-bold'>Description:</span> {recipe?.description}</p>
+<p><i className="fa fa-list me-2"></i><span className='fw-bold'>Categories:</span> {recipe?.category?.map(cat => cat?.name).join(', ')}</p>
+<p><i className="fa fa-tag me-2"></i><span className='fw-bold'>Tag:</span> {recipe?.tag?.name}</p>
+    </div>
+  )}
 
-              {category && (
-                <div className="categoryDetails">
-                  <p><span className='fw-bold text-dark-main'>ID:</span> {category?.id}</p>
-                  <p><span className='fw-bold text-dark-main'>Name:</span> {category?.name}</p>
-                  <p><span className='fw-bold text-dark-main'>Creation Date:</span>  {new Date(category?.creationDate).toLocaleString('en-GB', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true
-                  })}</p>
-                </div>
-              )}
+  {category && (
+    <div className="categoryDetails p-3 rounded-md shadow-sm bg-white mt-3">
+<p><i className="fa fa-id-badge me-2"></i><span className='fw-bold'>ID:</span> {category?.id}</p>
+<p><i className="fa fa-tag me-2"></i><span className='fw-bold'>Name:</span> {category?.name}</p>
+<p><i className="fa fa-calendar-alt me-2"></i><span className='fw-bold'>Creation Date:</span>  
+  {new Date(category?.creationDate).toLocaleString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  })}
+</p>
+    </div>
+  )}
 
-              {user && (
-                <div className="userDetails">
-                  <div className="text-center">
-                    <img
-                      src={user?.imagePath ? imgURL + user?.imagePath : staticImg}
-                      alt={user?.userName}
-                      className="w-25 rounded-circle"
-                    />
-                  </div>
-                  <p><span className='fw-bold text-dark-main'>ID:</span> {user?.id}</p>
-                  <p><span className='fw-bold text-dark-main'>Username:</span> {user?.userName}</p>
-                  <p><span className='fw-bold text-dark-main'>Email:</span> {user?.email}</p>
-                  <p><span className='fw-bold text-dark-main'>Country:</span> {user?.country}</p>
-                  <p><span className='fw-bold text-dark-main'>Phone:</span> {user?.phoneNumber}</p>
-                </div>
-              )}
-            </div>
+  {user && (
+    <div className="userDetails p-3 rounded-md shadow-sm bg-white mt-3">
+      <div className="text-center mb-3">
+        <img
+          src={user?.imagePath ? imgURL + user?.imagePath : staticImg}
+          alt={user?.userName}
+          className="w-25 rounded-circle shadow-sm"
+        />
+      </div>
+      <h5 className="text-center fw-bold"><i className="fa fa-user me-2"></i>{user?.userName}</h5>
+<p><i className="fa fa-id-badge me-2"></i><span className='fw-bold'>ID:</span> {user?.id}</p>
+<p><i className="fa fa-envelope me-2"></i><span className='fw-bold'>Email:</span> {user?.email}</p>
+<p><i className="fa fa-globe me-2"></i><span className='fw-bold'>Country:</span> {user?.country}</p>
+<p><i className="fa fa-phone me-2"></i><span className='fw-bold'>Phone:</span> {user?.phoneNumber}</p>
+    </div>
+  )}
+</div>
+
 
             <div className="modal-footer border-0">
               <button type="button" className="btn border-danger text-danger" onClick={() => { recipe && loginData?.userGroup === "SystemUser" ? handleAddToFavouriteClick() : onClose() }}>
-                {recipe && loginData?.userGroup === "SystemUser" ? "Favourite" : "Close"}
+                {recipe && loginData?.userGroup === "SystemUser" ? "Add to Favourite" : "Close"}
               </button>
             </div>
           </div>

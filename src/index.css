@@ -98,7 +98,7 @@
 }
 .actionDropdown{
     /* transform: translate3d(-99.6364px, -73.0909px, 0px) !important; */
-    --bs-dropdown-min-width: 2rem !important;
+    --bs-dropdown-min-width: 2.5rem !important;
     width: 120px;
 }
 .closeBtn{
@@ -318,3 +318,119 @@ html, body {
     background-color: #e0e0e0;
   }
 }
+.logoNotFound img{
+  width: 366px;
+  height: 104px;
+}
+.fs-14{
+  font-size: 14px !important;
+}
+.vectorNotfound{
+  position: absolute;
+  top: 0;
+  left: 33.5%;
+}
+.notFound{
+  width: 500px;
+  right: 10%;
+}
+.w-250{
+  width: 250px !important;
+}
+.form-control:focus {
+  box-shadow: none !important;
+  border-color: #59f48a !important;
+}
+.form-select:focus {
+  box-shadow: none !important;
+  border-color: #59f48a !important;
+}
+
+  .recipe-actions {
+    gap: 0.75rem;
+  }
+  
+  .recipe-action-icon {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .recipe-action-icon i {
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .recipe-action-icon:hover i {
+    transform: scale(1.2);
+  }
+  
+  .recipe-action-tooltip {
+    visibility: hidden;
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-70%);
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+    z-index: 10;
+  }
+  
+  .recipe-action-icon:hover .recipe-action-tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .description-container {
+    position: relative;
+  }
+  
+  .description-preview {
+    margin: 0;
+    max-height: 3rem;
+    overflow: hidden;
+  }
+  
+  .description-tooltip {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    max-width: 300px;
+    width: max-content;
+    top: 100%;
+    left: 0;
+  }
+  
+  .description-container:hover .description-tooltip {
+    display: block;
+  }
+  
+  .description-full-text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #333;
+  }
+  .imgCardTop{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  
+  

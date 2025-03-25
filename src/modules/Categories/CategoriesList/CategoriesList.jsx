@@ -70,10 +70,10 @@ export default function CategoriesList() {
     console.log('Deleting item with ID:', itemToDelete);
     try {
       let response = await privateAxiosInstance.delete(CATEGORIES_URLS.DELETE_CATEGORY(itemToDelete),);
-      toast.success('item deleted successfully', );
+      toast.success('item deleted successfully',);
       getCategories();
     } catch (error) {
-      toast.error(`${error?.response?.data?.message}`, );
+      toast.error(`${error?.response?.data?.message}`,);
       console.error('Error deleting categories:', error);
     }
     setShowModal(false);
@@ -97,8 +97,10 @@ export default function CategoriesList() {
       />
       <div className="categories container ">
 
-        <input type="search" className='form-control' placeholder='Enter category name' onInput={handleNameValue} />
-
+        <div className="input-group">
+          <span className="input-group-text greenMain"><i className="fa fa-list"></i></span>
+          <input type="search" className='form-control' placeholder='Enter category name' onInput={handleNameValue} />
+        </div>
         <div className="table-responsive pt-4">
           <table className="table min-w-1000">
             <thead>
