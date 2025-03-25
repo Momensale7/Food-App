@@ -59,7 +59,7 @@
     padding: 12px 85px 0px ;
 }
 .bg-main{
-    background-color: #1F384C;
+    background-color: #1F384C !important;
 }
 .text-dark-main{
     color: #1F384C ;
