@@ -181,6 +181,8 @@ html, body {
       .mainContent.collapsed {
         margin-left: 80px; /* When collapsed */
         width: calc(100% - 80px);
+        position: relative;
+        z-index: 555;
       }
 
       .modal.categoryModal {
